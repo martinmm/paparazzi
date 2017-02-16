@@ -33,6 +33,12 @@
 #include "pprzlink/messages.h"
 #include "subsystems/datalink/downlink.h"
 
+#if FLIGHTRECORDER_SDLOG
+#include "subsystems/datalink/telemetry.h"
+#include "pprzlink/pprzlog_transport.h"
+#include "modules/loggers/sdlog_chibios.h"
+#endif
+
 // sd-log
 #if TEMP_TEMOD_SDLOG
 #include "modules/loggers/sdlog_chibios.h"
@@ -91,8 +97,13 @@ void temod_event(void)
     ftmd_temperature = (tmd_temperature / TEMOD_TYPE) - 32.;
 
     DOWNLINK_SEND_TMP_STATUS(DefaultChannel, DefaultDevice, &tmd_temperature, &ftmd_temperature);
+#if FLIGHTRECORDER_SDLOG
+    if (flightRecorderLogFile != -1) {
+      DOWNLINK_SEND_TMP_STATUS(pprzlog_tp, flightrecorder_sdlog, 
+        &tmd_temperature, &ftmd_temperature);
+    }
+#endif
     tmd_trans.status = I2CTransDone;
-
 
 #if TEMP_TEMOD_SDLOG
     if (pprzLogFile != -1) {

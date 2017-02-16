@@ -964,6 +964,8 @@
 #define I2C2_DUTY_CYCLE FAST_DUTY_CYCLE_2
 #elif I2C2_CLOCK_SPEED == 100000
 #define I2C2_DUTY_CYCLE STD_DUTY_CYCLE
+#elif I2C2_CLOCK_SPEED == 40000
+#define I2C2_DUTY_CYCLE STD_DUTY_CYCLE
 #else
 #error Invalid I2C2 clock speed
 #endif

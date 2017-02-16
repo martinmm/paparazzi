@@ -35,6 +35,12 @@
 #include "subsystems/datalink/downlink.h"
 #include "humid_sht.h"
 
+#if FLIGHTRECORDER_SDLOG
+#include "subsystems/datalink/telemetry.h"
+#include "pprzlink/pprzlog_transport.h"
+#include "modules/loggers/sdlog_chibios.h"
+#endif
+
 // sd-log
 #if SHT_SDLOG
 #include "modules/loggers/sdlog_chibios.h"
@@ -350,6 +356,13 @@ void humid_sht_periodic(void)
       humid_sht_status = SHT_MEASURING_HUMID;
       DOWNLINK_SEND_SHT_STATUS(DefaultChannel, DefaultDevice, &humidsht, &tempsht, &fhumidsht, &ftempsht);
       humid_sht_available = false;
+
+#if FLIGHTRECORDER_SDLOG
+      if (flightRecorderLogFile != -1) {
+        DOWNLINK_SEND_SHT_STATUS(pprzlog_tp, flightrecorder_sdlog,
+          &humidsht, &tempsht, &fhumidsht, &ftempsht);
+      }
+#endif
 
 #if SHT_SDLOG
   if (pprzLogFile != -1) {

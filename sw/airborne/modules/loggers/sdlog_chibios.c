@@ -161,6 +161,9 @@ void sdlog_chibios_finish(bool flush)
 static void thd_startlog(void *arg)
 {
   (void) arg;
+  SdioError ret;
+  uint32_t i;
+
   chRegSetThreadName("start log");
 
   // Wait before starting the log if needed
@@ -175,9 +178,15 @@ static void thd_startlog(void *arg)
   // Check for init errors
   sdOk = true;
 
-  if (sdLogInit (NULL) != SDLOG_OK) {
-    sdOk = false;
+  // we do three retries as mounting sometimes fails
+  for (i=0; i<3; i++) {
+    ret = sdLogInit(NULL);
+    if (ret == SDLOG_OK)
+      break;
   }
+
+  if (ret != SDLOG_OK)
+    sdOk = false;
   else {
     removeEmptyLogs (PPRZ_LOG_DIR, PPRZ_LOG_NAME, 50);
     if (sdLogOpenLog (&pprzLogFile, PPRZ_LOG_DIR, PPRZ_LOG_NAME, true) != SDLOG_OK)

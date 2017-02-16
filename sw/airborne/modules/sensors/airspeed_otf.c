@@ -35,6 +35,12 @@
 #include "subsystems/datalink/downlink.h"
 #include <ctype.h>
 
+#if FLIGHTRECORDER_SDLOG
+#include "subsystems/datalink/telemetry.h"
+#include "pprzlink/pprzlog_transport.h"
+#include "modules/loggers/sdlog_chibios.h"
+#endif
+
 #include "met_module.h"
 #include "airspeed_otf.h"
 
@@ -82,7 +88,7 @@ void airspeed_otf_parse(char c)
         }
         otf_inp[otf_idx++] = c;
       } else {
-        if ((otf_idx == 5) && (c == OTF_LIMITER)) {
+        if ((otf_idx > 4) && (c == OTF_LIMITER)) {
           otf_inp[otf_idx] = 0;
           counter = atoi(otf_inp);
           otf_idx = 0;
@@ -135,8 +141,23 @@ void airspeed_otf_parse(char c)
           checksum = strtol(otf_inp, NULL, 16);
           otf_idx = 0;
           int32_t foo = 0;
-          DOWNLINK_SEND_AEROPROBE(DefaultChannel, DefaultDevice, &counter, &course[0], &course[1], &course[2],
-              &altitude, &foo, &foo, &checksum);
+#if FLIGHTRECORDER_SDLOG
+          RunOnceEvery(100,
+#endif
+          DOWNLINK_SEND_AEROPROBE(DefaultChannel, DefaultDevice, 
+            &counter, &course[0], &course[1], &course[2],
+            &altitude, &foo, &foo, &checksum);
+#if FLIGHTRECORDER_SDLOG
+          );
+#endif
+
+#if FLIGHTRECORDER_SDLOG
+      if (flightRecorderLogFile != -1) {
+        DOWNLINK_SEND_AEROPROBE(pprzlog_tp, flightrecorder_sdlog,
+          &counter, &course[0], &course[1], &course[2],
+          &altitude, &foo, &foo, &checksum);
+      }
+#endif
         }
         otf_status = OTF_UNINIT;
       }

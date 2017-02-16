@@ -36,6 +36,11 @@
 #include "pprzlink/messages.h"
 #include "subsystems/datalink/downlink.h"
 
+#if FLIGHTRECORDER_SDLOG
+#include "subsystems/datalink/telemetry.h"
+#include "pprzlink/pprzlog_transport.h"
+#include "modules/loggers/sdlog_chibios.h"
+#endif
 
 #ifndef MS5611_I2C_DEV
 #define MS5611_I2C_DEV i2c0
@@ -108,6 +113,16 @@ void baro_ms5611_event(void)
                               &baro_ms5611.data.d1, &baro_ms5611.data.d2,
                               &fbaroms, &temp);
 #endif
+
+#if FLIGHTRECORDER_SDLOG
+    fbaroms = baro_ms5611.data.pressure / 100.;
+    if (flightRecorderLogFile != -1) {
+      DOWNLINK_SEND_BARO_MS5611(pprzlog_tp, flightrecorder_sdlog,
+        &baro_ms5611.data.d1, &baro_ms5611.data.d2,
+        &fbaroms, &temp);
+      }
+#endif
+
   }
 }
 
@@ -123,5 +138,16 @@ void baro_ms5611_send_coeff(void)
                                &baro_ms5611.data.c[5],
                                &baro_ms5611.data.c[6],
                                &baro_ms5611.data.c[7]);
+#if FLIGHTRECORDER_SDLOG
+    DOWNLINK_SEND_MS5611_COEFF(pprzlog_tp, flightrecorder_sdlog,
+                               &baro_ms5611.data.c[0],
+                               &baro_ms5611.data.c[1],
+                               &baro_ms5611.data.c[2],
+                               &baro_ms5611.data.c[3],
+                               &baro_ms5611.data.c[4],
+                               &baro_ms5611.data.c[5],
+                               &baro_ms5611.data.c[6],
+                               &baro_ms5611.data.c[7]);
+#endif
   }
 }

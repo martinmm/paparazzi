@@ -26,7 +26,15 @@
 
 #include "peripherals/mpl3115.h"
 #include "std.h"
+#include "mcu_periph/uart.h"
+#include "pprzlink/messages.h"
+#include "subsystems/datalink/downlink.h"
 
+#if FLIGHTRECORDER_SDLOG
+#include "subsystems/datalink/telemetry.h"
+#include "pprzlink/pprzlog_transport.h"
+#include "modules/loggers/sdlog_chibios.h"
+#endif
 
 void mpl3115_init(struct Mpl3115 *mpl, struct i2c_periph *i2c_p, uint8_t addr)
 {
@@ -130,6 +138,16 @@ void mpl3115_event(struct Mpl3115 *mpl)
           tmp = ((int16_t)mpl->trans.buf[4] << 8) | mpl->trans.buf[5];
           mpl->temperature = (tmp >> 4);
         }
+#ifdef SENSOR_SYNC_SEND
+    DOWNLINK_SEND_MPL3115_BARO(DefaultChannel, DefaultDevice, &mpl->pressure, &mpl->temperature, NULL);
+#endif
+
+#if FLIGHTRECORDER_SDLOG
+      if (flightRecorderLogFile != -1) {
+        DOWNLINK_SEND_MPL3115_BARO(pprzlog_tp, flightrecorder_sdlog,
+          &mpl->pressure, &mpl->temperature, NULL);
+      }
+#endif
         mpl->data_available = true;
       }
       mpl->trans.status = I2CTransDone;

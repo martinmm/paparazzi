@@ -68,7 +68,7 @@ void baro_mpl3115_read_event(void)
     float temp = (float)baro_mpl.pressure / 16.0f;
     AbiSendMsgTEMPERATURE(BARO_MPL3115_SENDER_ID, temp);
 #ifdef SENSOR_SYNC_SEND
-    DOWNLINK_SEND_MPL3115_BARO(DefaultChannel, DefaultDevice, &baro_mpl.pressure, &baro_mpl.temperature, &baro_mpl.alt);
+    DOWNLINK_SEND_MPL3115_BARO(DefaultChannel, DefaultDevice, &baro_mpl.pressure, &baro_mpl.temperature, NULL);
 #endif
     baro_mpl.data_available = false;
   }

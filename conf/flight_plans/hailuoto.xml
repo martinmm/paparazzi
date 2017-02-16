@@ -1,0 +1,89 @@
+<!DOCTYPE flight_plan SYSTEM "flight_plan.dtd">
+
+<flight_plan alt="100" ground_alt="0" lat0="65.0392745" lon0="24.554487" max_dist_from_home="1500" name="Hailuoto" qfu="70" security_height="60">
+  <header>
+#include "subsystems/datalink/datalink.h"
+</header>
+  <waypoints>
+    <waypoint name="HOME" x="-33.9" y="-136.4"/>
+    <waypoint name="1" x="-208.7" y="-87.1"/>
+    <waypoint name="2" x="-181.6" y="-419.4"/>
+    <waypoint name="CR" x="34.1" y="189.9"/>
+    <waypoint name="STBY" x="50.9" y="171.0"/>
+    <waypoint name="S1" x="-200" y="-200"/>
+    <waypoint name="S2" x="52.1" y="-434.2"/>
+    <waypoint alt="70.0" name="START" x="-222.7" y="30.4"/>
+    <waypoint alt="0.0" name="TARGET" x="-56.9" y="7.8"/>
+    <waypoint alt="0.0" name="TD" x="-160.3" y="-122.7"/>
+    <waypoint alt="50.0" name="AF" x="-8.4" y="-84.5"/>
+    <waypoint alt="50.0" name="BASELEG" x="40." y="-130."/>
+    <waypoint alt="50.0" name="_BASELEG" x="40." y="-130."/>
+    <waypoint alt="70.0" name="RELEASE" x="40." y="-110."/>
+    <waypoint alt="70.0" name="CLIMB" x="40." y="-90."/>
+  </waypoints>
+  <blocks>
+    <block name="start">
+      <attitude pitch="20" roll="0" throttle="0.8" until="(autopilot_flight_time > 3)" vmode="throttle"/>
+      <go wp="START"/>
+    </block>
+    <block name="wait" strip_button="wait">
+      <circle radius="nav_radius" wp="CR"/>
+    </block>
+    <block name="prof">
+      <circle radius="nav_radius" wp="STBY"/>
+    </block>
+    <block name="survey">
+      <survey_rectangle grid="150" wp1="S1" wp2="S2"/>
+    </block>
+    <block name="Oval 1-2" strip_button="Oval (wp 1-2)" strip_icon="oval.png">
+      <oval p1="1" p2="2" radius="nav_radius"/>
+    </block>
+    <block name="Survey S1-S2 NS" strip_button="Survey (wp S1-S2) NS" strip_icon="survey.png">
+      <survey_rectangle grid="150" wp1="S1" wp2="S2"/>
+    </block>
+    <block name="Survey S1-S2 WE" strip_button="Survey (wp S1-S2) WE" strip_icon="survey_we.png">
+      <survey_rectangle grid="150" orientation="WE" wp1="S1" wp2="S2"/>
+    </block>
+    <block name="Figure 8 around wp 1" strip_button="Figure 8 (wp 1-2)" strip_icon="eight.png">
+      <eight center="1" radius="nav_radius" turn_around="2"/>
+    </block>
+    <block name="down" strip_button="Down" strip_icon="downdown.png">
+      <set value="LATERAL_MODE_ROLL" var="lateral_mode"/>
+      <set value="V_CTL_MODE_MANUAL" var="v_ctl_mode"/>
+      <set value="TRUE" var="h_ctl_disabled"/>
+      <set value="(-0.6*MAX_PPRZ)" var="h_ctl_aileron_setpoint"/>
+      <set value="(0.9*MAX_PPRZ)" var="h_ctl_elevator_setpoint"/>
+      <while cond="GetPosAlt() > GetAltRef() + 220"/>
+      <set value="0" var="h_ctl_aileron_setpoint"/>
+      <set value="0" var="h_ctl_elevator_setpoint"/>
+    </block>
+    <block name="down_end" strip_button="DownEnd" strip_icon="downdownend.png">
+      <set value="0" var="h_ctl_aileron_setpoint"/>
+      <set value="0" var="h_ctl_elevator_setpoint"/>
+      <while cond="1.> stage_time"/>
+      <set value="FALSE" var="h_ctl_disabled"/>
+      <deroute block="wait"/>
+    </block>
+    <block name="Land Right AF-TD" strip_button="Land right (wp AF-TD)" strip_icon="land-right.png">
+      <set value="DEFAULT_CIRCLE_RADIUS" var="nav_radius"/>
+      <deroute block="land"/>
+    </block>
+    <block name="Land Left AF-TD" strip_button="Land left (wp AF-TD)" strip_icon="land-left.png">
+      <set value="-DEFAULT_CIRCLE_RADIUS" var="nav_radius"/>
+      <deroute block="land"/>
+    </block>
+    <block name="land">
+      <call_once fun="nav_compute_baseleg(WP_AF, WP_TD, WP__BASELEG, nav_radius)"/>
+      <circle radius="nav_radius" until="NavCircleCount() > 0.5" wp="_BASELEG"/>
+      <circle radius="nav_radius" until="NavQdrCloseTo(DegOfRad(baseleg_out_qdr)-(nav_radius/fabs(nav_radius))*10) && 20 > fabs(GetPosAlt() - WaypointAlt(WP__BASELEG))" wp="_BASELEG"/>
+    </block>
+    <block name="final">
+      <exception cond="GetAltRef() + 10 > GetPosAlt()" deroute="flare"/>
+      <go from="AF" hmode="route" vmode="glide" wp="TD"/>
+    </block>
+    <block name="flare">
+      <go approaching_time="0" from="AF" hmode="route" throttle="0.0" vmode="throttle" wp="TD"/>
+      <attitude roll="0.0" throttle="0.0" until="FALSE" vmode="throttle"/>
+    </block>
+  </blocks>
+</flight_plan>

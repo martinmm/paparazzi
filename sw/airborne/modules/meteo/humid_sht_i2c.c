@@ -33,6 +33,11 @@
 #include "pprzlink/messages.h"
 #include "subsystems/datalink/downlink.h"
 
+#if FLIGHTRECORDER_SDLOG
+#include "subsystems/datalink/telemetry.h"
+#include "pprzlink/pprzlog_transport.h"
+#include "modules/loggers/sdlog_chibios.h"
+#endif
 
 #ifndef SHT_I2C_DEV
 #define SHT_I2C_DEV i2c0
@@ -170,6 +175,12 @@ void humid_sht_event_i2c(void)
 
         if (humid_sht_crc(sht_trans.buf) == 0) {
           DOWNLINK_SEND_SHT_I2C_STATUS(DefaultChannel, DefaultDevice, &humidsht_i2c, &tempsht_i2c, &fhumidsht_i2c, &ftempsht_i2c);
+#if FLIGHTRECORDER_SDLOG
+          if (flightRecorderLogFile != -1) {
+             DOWNLINK_SEND_SHT_I2C_STATUS(pprzlog_tp, flightrecorder_sdlog,
+               &humidsht_i2c, &tempsht_i2c, &fhumidsht_i2c, &ftempsht_i2c);
+          }
+#endif
         }
         break;
 

@@ -34,7 +34,7 @@
 
 #define NUMBERLEN 4
 #define NUMBERMAX 9999
-#define NUMBERFMF "%s\\%s%.04d.LOG"
+#define NUMBERFMF "%s\\%s%.04d.TLM"
 
 #ifdef __cplusplus
 extern "C" {

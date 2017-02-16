@@ -36,6 +36,11 @@
 #include "pprzlink/messages.h"
 #include "subsystems/datalink/downlink.h"
 
+#if FLIGHTRECORDER_SDLOG
+#include "subsystems/datalink/telemetry.h"
+#include "pprzlink/pprzlog_transport.h"
+#include "modules/loggers/sdlog_chibios.h"
+#endif
 
 #ifndef MLX_I2C_DEV
 #define MLX_I2C_DEV i2c0
@@ -203,7 +208,17 @@ void ir_mlx_event(void)
                                  &ir_mlx_temp_case,
                                  &ir_mlx_itemp_obj,
                                  &ir_mlx_temp_obj);
+#if FLIGHTRECORDER_SDLOG
+        if (flightRecorderLogFile != -1) {
+          DOWNLINK_SEND_MLX_STATUS(pprzlog_tp, flightrecorder_sdlog,
+                                   &ir_mlx_itemp_case,
+                                   &ir_mlx_temp_case,
+                                   &ir_mlx_itemp_obj,
+                                   &ir_mlx_temp_obj);
+        }
+#endif
         break;
+
       default:
         mlx_trans.status = I2CTransDone;
         break;

@@ -10,8 +10,8 @@
   </header>
   <init fun="humid_sht_init_i2c()"/>
   <periodic fun="humid_sht_periodic_i2c()" freq="4" delay="0"/>
-  <periodic fun="humid_sht_p_temp()" freq="4" delay="6"/>
-  <periodic fun="humid_sht_p_humid()"  freq="4" delay="9"/>
+  <periodic fun="humid_sht_p_temp()" freq="4" delay="7"/>
+  <periodic fun="humid_sht_p_humid()"  freq="4" delay="14"/>
   <event fun="humid_sht_event_i2c()"/>
   <makefile target="ap">
     <file name="humid_sht_i2c.c"/>
