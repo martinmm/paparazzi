@@ -6,10 +6,10 @@
 </header>
   <waypoints>
     <waypoint name="HOME" x="-33.9" y="-136.4"/>
-    <waypoint name="1" x="-208.7" y="-87.1"/>
-    <waypoint name="2" x="-181.6" y="-419.4"/>
-    <waypoint name="CR" x="34.1" y="189.9"/>
-    <waypoint name="STBY" x="50.9" y="171.0"/>
+    <waypoint name="1" x="139.4" y="-287.3"/>
+    <waypoint name="2" x="-314.8" y="137.9"/>
+    <waypoint name="CR" x="-20.4" y="-74.3"/>
+    <waypoint name="STBY" x="10.6" y="-73.7"/>
     <waypoint name="S1" x="-200" y="-200"/>
     <waypoint name="S2" x="52.1" y="-434.2"/>
     <waypoint alt="70.0" name="START" x="-222.7" y="30.4"/>
