@@ -1,0 +1,267 @@
+<!DOCTYPE airframe SYSTEM "../airframe.dtd">
+
+<!-- mini Talon, robbe 960-6
+     Apogee
+     XBee modem
+     NEO 6M
+-->
+
+<airframe name="mini Talon Apogee">
+
+  <firmware name="fixedwing">
+    <configure name="RTOS_DEBUG" value="1"/>
+
+    <target name="ap" board="apogee_1.0_chibios">
+      <module name="radio_control" type="ppm"/>
+      <configure name="PERIODIC_FREQUENCY" value="100"/>
+    </target>
+    <target name="sim" board="pc">
+      <module name="radio_control" type="ppm"/>
+    </target>
+
+    <define name="USE_I2C1"/>
+    <define name="USE_I2C2"/>
+    <define name="I2C2_CLOCK_SPEED" value="40000"/>
+    <define name="LED_SDLOG" value="4"/>
+    <define name="SDLOG_START_DELAY" value="5"/>
+    <define name="SENSOR_SYNC_SEND"/>
+    <define name="STRONG_WIND"/>
+    <!--define name="AGR_CLIMB"/-->
+    <!--define name="LOITER_TRIM"/-->
+    <!--define name="PITCH_TRIM"/-->
+
+    <!-- Communication -->
+    <module name="telemetry" type="xbee_api"/>
+    <module name="tlsf"/>
+    <module name="pprzlog"/>
+    <module name="logger" type="sd_chibios"/>
+    <module name="flight_recorder"/>
+
+    <!-- Actuators are automatically chosen according to board-->
+    <module name="imu"     type="apogee"/>
+    <module name="ahrs"    type="float_dcm"/>
+    <module name="ins"     type="alt_float"/>
+    <module name="control"/>
+    <module name="navigation"/>
+    <!-- Sensors -->
+    <module name="gps" type="ublox">
+      <!--configure name="GPS_BAUD" value="B57600"/-->
+    </module>
+	  <!--module name="sys_mon"/-->
+
+    <!--module name="spi_master"/-->
+    <!-- <module name="mcp355x"> -->
+    <!--   <define name="USE_SPI1"/> -->
+    <!-- </module> -->
+    <!--module name="extra_dl">
+      <configure name="EXTRA_DL_PORT" value="UART6"/>
+      <configure name="EXTRA_DL_BAUD" value="B57600"/>
+    </module>
+    <module name="meteo_france_DAQ"/-->
+  </firmware>
+
+  <firmware name="test_chibios">
+    <target name="test_sys_time_timer"  board="apogee_1.0_chibios"/>
+    <target name="test_led"             board="apogee_1.0_chibios"/>
+    <target name="test_sys_gpio"        board="apogee_1.0_chibios"/>
+  </firmware>
+
+  <!-- modules -->
+  <modules>
+	<!--module name="nav_line"/>
+    <module name="gps" type="ubx_ucenter"/-->
+    <module name="airspeed_ets">
+      <define name="AIRSPEED_ETS_SYNC_SEND"/>
+      <configure name="AIRSPEED_ETS_I2C_DEV" value="i2c2"/>
+    </module>
+    <module name="temp_temod.xml">
+      <configure name="TEMOD_I2C_DEV" value="i2c2"/>
+    </module>
+    <module name="ir_mlx.xml">
+      <define name="MLX_I2C_DEV" value="i2c2"/>
+    </module>
+    <module name="humid_sht_i2c.xml">
+      <define name="SHT_I2C_DEV" value="i2c2"/>
+    </module>
+    <load name="humid_sht.xml">
+      <define name="SHT_DAT_GPIO" value="GPIOC,GPIO4"/>
+      <define name="SHT_SCK_GPIO" value="GPIOB,GPIO15"/>
+    </load>
+    <module name="baro_ms5611_i2c.xml">
+      <configure name="MS5611_I2C_DEV" value="i2c2"/>
+    </module>
+    <module name="airspeed_otf.xml">
+      <configure name="OTF_UART" value="uart6"/>
+    </module>
+  </modules>
+
+  <!-- commands section -->
+  <servos>
+<!--1--><servo name="MOTOR"          no="0" min="1000" neutral="1000" max="2000"/>
+<!--2--><servo name="AILERON_LEFT"   no="1" min="1100" neutral="1489" max="1900"/>
+<!--3--><servo name="AILERON_RIGHT"  no="2" min="1100" neutral="1489" max="1900"/>
+<!--4--><servo name="ELEVATOR_LEFT"  no="3" min="1900" neutral="1522" max="1100"/>
+<!--5--><servo name="ELEVATOR_RIGHT" no="4" min="1100" neutral="1562" max="1900"/>
+  </servos>
+
+  <commands>
+    <axis name="THROTTLE" failsafe_value="0"/>
+    <axis name="ROLL"     failsafe_value="0"/>
+    <axis name="PITCH"    failsafe_value="0"/>
+    <axis name="YAW"      failsafe_value="0"/>
+  </commands>
+
+  <rc_commands>
+    <set command="THROTTLE"  value="@THROTTLE"/>
+    <set command="ROLL"      value="@ROLL"/>
+    <set command="PITCH"     value="@PITCH"/>
+    <set command="YAW"       value="@YAW"/>
+  </rc_commands>
+
+  <section name="MIXER">
+    <define name="AILERON_DIFF" value="1"/>
+    <define name="YAW_VTAIL_RATE" value="1"/>
+    <define name="ELEVATOR_VTAIL_RATE" value="1"/>
+    <define name="AILERON_YAW_RATE" value="0.20"/><!--0.15-->
+  </section>
+
+  <command_laws>
+    <let var="yaw"         value="@YAW   * YAW_VTAIL_RATE"/>
+    <let var="elevator"    value="@PITCH * ELEVATOR_VTAIL_RATE"/>  
+    <let var="aileron_yaw" value="@ROLL  * AILERON_YAW_RATE"/>
+    <set servo="MOTOR"           value="@THROTTLE"/>
+    <set servo="AILERON_LEFT"    value="@ROLL * AILERON_DIFF"/>
+    <set servo="AILERON_RIGHT"   value="@ROLL * AILERON_DIFF"/>
+    <set servo="ELEVATOR_LEFT"   value="$elevator + $yaw + $aileron_yaw"/>
+    <set servo="ELEVATOR_RIGHT"  value="$elevator - $yaw - $aileron_yaw"/>
+  </command_laws>
+
+  <section name="AUTO1" prefix="AUTO1_">
+    <define name="MAX_ROLL" value="1.25"/>
+    <define name="MAX_PITCH" value="0.6"/>
+  </section>
+
+  <section name="IMU" prefix="IMU_">
+    <!-- Calibration Neutral -->
+    <define name="GYRO_P_NEUTRAL" value="38"/>
+    <define name="GYRO_Q_NEUTRAL" value="15"/>
+    <define name="GYRO_R_NEUTRAL" value="-11"/>
+
+    <define name="ACCEL_X_NEUTRAL" value="-8"/>
+    <define name="ACCEL_Y_NEUTRAL" value="-2"/>
+    <define name="ACCEL_Z_NEUTRAL" value="-25"/>
+
+    <!-- Just to compile -->
+    <define name="MAG_X_NEUTRAL" value="0"/>
+    <define name="MAG_Y_NEUTRAL" value="0"/>
+    <define name="MAG_Z_NEUTRAL" value="0"/>
+
+    <define name="BODY_TO_IMU_PHI" value="0"/>
+    <define name="BODY_TO_IMU_THETA" value="0"/>
+    <define name="BODY_TO_IMU_PSI" value="0"/>
+	  
+    <!-- installing the Apogee with the Molex up -->
+    <define name="GYRO_P_SIGN" value="1"/>
+    <define name="GYRO_Q_SIGN" value="-1"/>
+    <define name="GYRO_R_SIGN" value="-1"/>
+
+    <define name="ACCEL_X_SIGN" value="1"/>
+    <define name="ACCEL_Y_SIGN" value="-1"/>
+    <define name="ACCEL_Z_SIGN" value="-1"/>
+  </section>
+
+  <section name="INS" prefix="INS_">
+    <define name="ROLL_NEUTRAL_DEFAULT"  value="0." unit="deg"/>
+    <define name="PITCH_NEUTRAL_DEFAULT" value="0." unit="deg"/>
+  </section>
+
+  <section name="BAT">
+    <define name="MilliAmpereOfAdc(adc)" value="(((adc)-114) * 131)"/>
+    <!--define name="MILLIAMP_AT_FULL_THROTTLE" value="15000."/-->
+    <define name="CATASTROPHIC_BAT_LEVEL" value="12.4" unit="V"/>
+  </section>
+
+  <section name="MISC">
+    <define name="NOMINAL_AIRSPEED" value="19." unit="m/s"/>
+    <define name="CARROT" value="5." unit="s"/>
+    <define name="KILL_MODE_DISTANCE" value="(1.5*MAX_DIST_FROM_HOME)"/>
+    <define name="CONTROL_FREQUENCY" value="60" unit="Hz"/>
+    <define name="ALT_KALMAN_ENABLED" value="TRUE"/>
+    <define name="DEFAULT_CIRCLE_RADIUS" value="140."/>
+  </section>
+
+  <section name="VERTICAL CONTROL" prefix="V_CTL_">
+
+    <define name="POWER_CTL_BAT_NOMINAL" value="14.8" unit="volt"/>
+    <!-- outer loop proportional gain -->
+    <define name="ALTITUDE_PGAIN" value="0.06"/> <!-- -0.024 -->
+    <!-- outer loop saturation -->
+    <define name="ALTITUDE_MAX_CLIMB" value="2."/>
+
+    <!-- auto throttle inner loop -->
+    <define name="AUTO_THROTTLE_NOMINAL_CRUISE_THROTTLE" value="0.55"/>
+    <define name="AUTO_THROTTLE_MIN_CRUISE_THROTTLE" value="0.25"/>
+    <define name="AUTO_THROTTLE_MAX_CRUISE_THROTTLE" value="0.85"/>
+    <define name="AUTO_THROTTLE_LOITER_TRIM" value="1000"/>
+    <define name="AUTO_THROTTLE_DASH_TRIM" value="-5000"/>
+    <define name="AUTO_THROTTLE_CLIMB_THROTTLE_INCREMENT" value="0.2" unit="%/(m/s)"/>
+    <define name="AUTO_THROTTLE_PGAIN" value="0.013"/> <!-- -0.012 -->
+    <define name="AUTO_THROTTLE_IGAIN" value="0.02"/>
+    <define name="AUTO_THROTTLE_PITCH_OF_VZ_PGAIN" value="0.2"/>
+
+    <!-- auto pitch inner loop -->
+    <define name="AUTO_PITCH_PGAIN" value="0.1"/> <!-- -0.03 -->
+    <define name="AUTO_PITCH_IGAIN" value="0.0"/>
+    <define name="AUTO_PITCH_MAX_PITCH" value="0.35"/>
+    <define name="AUTO_PITCH_MIN_PITCH" value="-0.35"/>
+
+   <define name="THROTTLE_SLEW" value="0.1"/>
+
+  </section>
+
+  <section name="HORIZONTAL CONTROL" prefix="H_CTL_">
+    <define name="COURSE_PGAIN" value="1.0"/>
+    <define name="ROLL_MAX_SETPOINT" value="1.15" unit="rad"/> <!-- 0.5 -->
+    <define name="PITCH_MAX_SETPOINT" value="0.6" unit="rad"/>
+    <define name="PITCH_MIN_SETPOINT" value="-0.6" unit="rad"/>
+
+    <define name="ROLL_PGAIN" value="10000."/>
+    <define name="AILERON_OF_THROTTLE" value="0.0"/>
+    <define name="PITCH_PGAIN" value="20000."/>
+    <define name="PITCH_DGAIN" value="0.4"/>
+
+    <define name="PITCH_ZEROG_PGAIN" value="0.1"/>
+    <define name="PITCH_ZEROG_PRESET" value="10"/>
+
+    <define name="ELEVATOR_OF_ROLL" value="4000"/>
+    <define name="ROLL_SLEW" value="0.7"/>
+
+    <define name="ROLL_ATTITUDE_GAIN" value="7500"/>
+    <define name="ROLL_RATE_GAIN" value="1500"/>
+
+  </section>
+
+  <section name="NAV">
+    <define name="NAV_GLIDE_PITCH_TRIM" value="0"/>
+  </section>
+
+  <section name="AGGRESSIVE" prefix="AGR_">
+    <define name="BLEND_START" value="50"/><!-- Altitude Error to Initiate Aggressive Climb CANNOT BE ZERO!!-->
+    <define name="BLEND_END" value="15"/><!-- Altitude Error to Blend Aggressive to Regular Climb Modes  CANNOT BE ZERO!!-->
+    <define name="CLIMB_THROTTLE" value="0.9"/><!-- Gaz for Aggressive Climb -->
+    <define name="CLIMB_PITCH" value="0.35"/><!-- Pitch for Aggressive Climb -->
+    <define name="DESCENT_THROTTLE" value="0.05"/><!-- Gaz for Aggressive Decent -->
+    <define name="DESCENT_PITCH" value="-0.35"/><!-- Pitch for Aggressive Decent -->
+    <define name="CLIMB_NAV_RATIO" value="0.8"/><!-- Percent Navigation for Altitude Error Equal to Start Altitude -->
+    <define name="DESCENT_NAV_RATIO" value="1.0"/>
+    </section>
+
+  <section name="FAILSAFE" prefix="FAILSAFE_">
+	<define name="DELAY_WITHOUT_GPS" value="2" unit="s"/>
+    	<define name="DEFAULT_THROTTLE" value="0.3" unit="%"/>
+    	<define name="DEFAULT_ROLL" value="0.3" unit="rad"/>
+    	<define name="DEFAULT_PITCH" value="0.5" unit="rad"/>
+	<define name="HOME_RADIUS" value="100" unit="m"/>
+  </section>
+
+</airframe>
