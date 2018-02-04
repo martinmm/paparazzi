@@ -1,0 +1,17 @@
+<!DOCTYPE module SYSTEM "module.dtd">
+
+<module name="wind_align" dir="meteo">
+  <doc>
+    <description>Aligns quadcopter to wind direction</description>
+    <define name="WIND_ALIGN_PGAIN" value="proportional" description="gain (default 0.005)"/>
+  </doc>
+  <header>
+    <file name="wind_align.h"/>
+  </header>
+  <init fun="wind_align_init()"/>
+  <periodic fun="wind_align_periodic()" freq="500" autorun="FALSE"/>
+  <makefile target="ap|nps">
+    <file name="wind_align.c"/>
+  </makefile>
+</module>
+
