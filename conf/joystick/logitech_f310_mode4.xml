@@ -62,10 +62,10 @@ The "mode" button swaps the axes on the left stick and the d pad.
 
   <message class="datalink" name="RC_4CH" send_always="true">
    <field name="mode" value="mode"/>
-   <field name="throttle" value="Fit(0-ry,-127,127,0,127)"/>
-   <field name="roll" value="rx"/>
-   <field name="yaw" value="Fit(lx,-127,127,-64,64)"/>
-   <field name="pitch" value="ly"/>
+   <field name="throttle" value="Fit(0-ly,-127,127,0,127)"/>
+   <field name="roll" value="lx"/>
+   <field name="yaw" value="Fit(rx,-127,127,-64,64)"/>
+   <field name="pitch" value="ry"/>
   </message>
 
   <!-- trim commands -->
