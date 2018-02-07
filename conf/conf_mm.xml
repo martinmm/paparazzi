@@ -2,7 +2,7 @@
   <aircraft
    name="bebop2_gfi1"
    ac_id="251"
-   airframe="airframes/mm/bebop2_gfi1_wifi.xml"
+   airframe="airframes/MM/bebop2_gfi1_wifi.xml"
    radio="radios/dummy.xml"
    telemetry="telemetry/default_rotorcraft.xml"
    flight_plan="flight_plans/HAILUOTO/Hailuoto2018_F2_rotorcraft.xml"
@@ -13,7 +13,7 @@
   <aircraft
    name="bebop2_gfi2"
    ac_id="252"
-   airframe="airframes/mm/bebop2_gfi2_wifi.xml"
+   airframe="airframes/MM/bebop2_gfi2_wifi.xml"
    radio="radios/dummy.xml"
    telemetry="telemetry/default_rotorcraft.xml"
    flight_plan="flight_plans/HAILUOTO/Hailuoto2018_F2_rotorcraft.xml"
@@ -24,7 +24,7 @@
   <aircraft
    name="bebop2_gfi3"
    ac_id="253"
-   airframe="airframes/mm/bebop2_gfi3_wifi.xml"
+   airframe="airframes/MM/bebop2_gfi3_wifi.xml"
    radio="radios/dummy.xml"
    telemetry="telemetry/default_rotorcraft.xml"
    flight_plan="flight_plans/HAILUOTO/Hailuoto2018_F2_rotorcraft.xml"
@@ -35,7 +35,7 @@
   <aircraft
    name="bebop2_lum1"
    ac_id="221"
-   airframe="airframes/mm/bebop2_n_lum1.xml"
+   airframe="airframes/MM/bebop2_n_lum1.xml"
    radio="radios/dummy.xml"
    telemetry="telemetry/default_rotorcraft.xml"
    flight_plan="flight_plans/HAILUOTO/Hailuoto2018_F2_rotorcraft.xml"
