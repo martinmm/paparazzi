@@ -1,0 +1,55 @@
+Pre-flight
+
+Aircraft:
+UAV undamaged
+UAV detachable parts secured
+All holes closed (SUMO)
+UAV batteries charged
+RC batteries charged
+GCS batteries charged
+
+GCS:
+VLOS/BVLOS permission (NOTAM)
+VLOS/BVLOS flight plan
+UAV ID
+UAV balanced (adjust battery position)
+turn on remote control -> trottle down
+Flash -> target ap -> clean -> build -> connect USB in front -> power up aircraft -> upload -> power off -> unplug USB -> keep aircraft leveled -> power on (beeping)
+GCS maps
+GCS link
+RC link
+GPS Status
+UAV responds to RC commands 
+GCS flight modes
+PFD responding
+Sensors responding
+Data stream on (if possible)
+GPS signal
+Weather conditions
+adjust START/STBY/landing (AF & TD) WP in flight plan 
+Communication with UAV coordinator
+Motor running on full throttle
+
+During operation:
+announce ID, battery, GPS, RC mode and AGL
+Launch (throw into the wind) at full throttle Auto1 or Auto2
+safe altitude
+check response in Auto1
+monitor AC
+monitor air speed -> dash if too slow
+monitor battery -> land when at 10.3V???
+switch to flat array antenna -> restart link
+communicate with RC pilot
+switch to small mobile antenna -> restart link
+monitor wind
+adjust auto-landing
+warn others
+
+After landing:
+stop logger
+download data
+disconnect battery -> mark as empty -> charge
+convert .TLM to .log and .data
+store in directory
+backup data
+
