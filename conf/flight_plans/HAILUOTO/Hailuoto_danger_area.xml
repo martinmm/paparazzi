@@ -1,0 +1,81 @@
+<!DOCTYPE flight_plan SYSTEM "../flight_plan.dtd">
+
+<flight_plan alt="30" ground_alt="0" lat0="65 02 22" lon0="24 33 04" max_dist_from_home="10000" name="Hailuoto danger area" qfu="0" security_height="110">
+  <header>
+   #include "autopilot.h"
+   #include "subsystems/datalink/datalink.h"
+   #include "modules/nav/nav_line.h"
+  </header>
+  <waypoints>
+    <waypoint name="DA1" lat="65.0783"   lon="24.5139"/>
+    <waypoint name="DA2" lat="65.059046" lon="24.603193"/>
+    <waypoint name="DA3" lat="65.038377" lon="24.567411"/>
+    <waypoint name="DA4" lat="65.016507" lon="24.584662"/>
+    <waypoint name="DA5" lat="65.0158"   lon="24.47"/>
+    <waypoint name="DA6" lat="65.0514"   lon="24.46"/>
+
+    <waypoint height="30.0" name="HOME" x="0" y="0"/>
+    <waypoint height="30.0" name="CLIMB" x="0" y="0"/>
+    <waypoint height="30.0" name="STDBY" x="-10" y="10"/>
+    <waypoint height="30.0" name="p1" x="-20" y="20"/>
+    <waypoint height="10.0" name="p2" x="-20" y="20"/>
+    <waypoint height="30.0" name="p3" x="-20" y="20"/>
+    <waypoint height="100.0" name="p4" x="-44.0" y="-26.6"/>
+    <waypoint height="30.0" name="CAM" x="-5.0" y="-5"/>
+    <waypoint height="30.0" name="TD" x="-9.1" y="20.0"/>
+    <!--waypoint alt="104" name="MetMast" lat="69.293669" lon="16.019087"/>
+    <waypoint alt="6" name="ASCstart1" lat="69.2946448" lon="16.0171296"/>
+    <waypoint name="DA1" lat="69.295907" lon="24."/>
+    <waypoint alt="10" name="ASCstart3" lat="69.294660" lon="16.029589"/>  
+    <waypoint alt="21" name="HobbyAirfield1" lat="69.212738" lon="15.910781"/>
+    <waypoint alt="21" name="HobbyAirfield2" lat="69.212446" lon="15.911223"/>
+    <waypoint alt="35" name="WideValley1" lat="69.12534356" lon="15.83622767"/--> 
+  </waypoints>
+
+  <sectors>
+  <sector name="D-AREA" color="green">
+    <corner name="DA1"/>
+    <corner name="DA1"/>
+    <corner name="DA1"/>
+    <corner name="DA1"/>
+    <corner name="DA1"/>
+    <corner name="DA1"/>
+    <!--polygon>
+     <point pos="WGS84 43.4475 1.2663"/>
+     <point pos="WGS84 43.4472 1.2618"/>
+     <point pos="WGS84 43.4504 1.2582"/>
+     <point pos="WGS84 43.4519 1.2592"/>
+     <point pos="WGS84 43.4520 1.2637"/>
+     <point pos="WGS84 43.4491 1.2674"/>
+    </polygon-->
+  </sector>
+  </sectors>
+
+  <blocks>
+    <block name="Wait GPS">
+      <call fun="NavKillThrottle()"/>
+      <while cond="!GpsFixValid()"/>
+    </block>
+    <block name="Geo init">
+      <while cond="LessThan(NavBlockTime(), 10)"/>
+    </block>
+    <block name="Holding point">
+      <call fun="NavKillThrottle()"/>
+      <attitude pitch="0" roll="0" throttle="0" until="FALSE" vmode="throttle"/>
+    </block>
+    <block name="Start Engine">
+      <call fun="NavResurrect()"/>
+      <attitude pitch="0" roll="0" throttle="0" until="FALSE" vmode="throttle"/>
+    </block>
+    <block name="Takeoff" strip_button="Takeoff" strip_icon="takeoff.png">
+      <exception cond="stateGetPositionEnu_f()->z > 2.0" deroute="Standby"/>
+      <call fun="NavSetWaypointHere(WP_CLIMB)"/>
+      <stay climb="nav_climb_vspeed" vmode="climb" wp="CLIMB"/>
+    </block>
+    <block name="Standby" strip_button="Standby" strip_icon="home.png">
+      <stay wp="STDBY"/>
+    </block>
+
+  </blocks>
+
+</flight_plan>

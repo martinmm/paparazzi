@@ -1,0 +1,98 @@
+<!DOCTYPE flight_plan SYSTEM "../flight_plan.dtd">
+
+<flight_plan alt="30" ground_alt="0" lat0="60.865056" lon0="5.213141" max_dist_from_home="100" name="Hailuoto S1 Rotor" qfu="0" security_height="2">
+  <header>
+   #include "autopilot.h"
+   #include "subsystems/datalink/datalink.h"
+   #include "modules/nav/nav_line.h"
+   #include "subsystems/electrical.h"
+</header>
+  <waypoints>
+    <waypoint alt="420.0" name="max_alt" x="50" y="35"/>
+    <waypoint alt="2.0" name="p_lowest" x="50" y="30"/>
+    <waypoint alt="15.0" name="p_low" x="50" y="25"/>
+    <waypoint alt="200.0" name="p_high" x="50" y="20"/>
+    <waypoint alt="5.0" name="p_grid" x="50" y="15"/>
+    <waypoint name="HOME" x="0" y="0"/>
+    <waypoint name="CLIMB" x="7.9" y="21.7"/>
+    <waypoint alt="2.0" name="STDBY" x="10" y="1"/>
+    <waypoint name="P1" x="10" y="0"/>
+    <waypoint alt="4.0" name="Hover" x="9.8" y="13.0"/>
+    <waypoint name="TD" x="0" y="0"/>
+    <waypoint alt="10" lat="65.0384495" lon="24.5549361" name="Flux2"/>
+    <waypoint alt="10" lat="65.0392" lon="24.5543" name="Lidar"/>
+    <waypoint alt="10" lat="65.0387" lon="24.5522" name="Sodar"/>
+  </waypoints>
+  <exceptions>
+    <exception cond="GetPosAlt()-GetAltRef() > WaypointAlt(WP_max_alt)" deroute="Standby"/>
+    <exception cond="datalink_time > 10" deroute="land here"/>
+    <exception cond="electrical.bat_low" deroute="land here"/>
+  </exceptions>
+  <blocks>
+    <block name="Wait GPS">
+      <call_once fun="NavKillThrottle()"/>
+      <while cond="!GpsFixValid()"/>
+    </block>
+    <block name="Geo init">
+      <while cond="LessThan(NavBlockTime(), 10)"/>
+    </block>
+    <block name="Holding point">
+      <call_once fun="NavKillThrottle()"/>
+      <attitude pitch="0" roll="0" throttle="0" until="FALSE" vmode="throttle"/>
+    </block>
+    <block name="Start Engine">
+      <call_once fun="NavResurrect()"/>
+      <attitude pitch="0" roll="0" throttle="0" until="FALSE" vmode="throttle"/>
+    </block>
+    <block name="Takeoff" strip_button="Takeoff" strip_icon="takeoff.png">
+      <exception cond="stateGetPositionEnu_f()->z > 2.0" deroute="Standby"/>
+      <call_once fun="NavSetWaypointHere(WP_CLIMB)"/>
+      <stay climb="nav_climb_vspeed" vmode="climb" wp="CLIMB"/>
+    </block>
+    <block name="Standby" strip_button="Standby" strip_icon="home.png">
+      <stay wp="STDBY"/>
+    </block>
+    <block name="stay_p1">
+      <stay alt="WaypointAlt(WP_p_lowest) + GetAltRef()" until="stage_time > 30" wp="P1"/>
+      <deroute block="prof_p1"/>
+    </block>
+    <block name="prof_p1" >
+      <stay alt="WaypointAlt(WP_p_lowest) + WaypointAlt(WP_p_high) + GetAltRef() + 5" until="GetPosAlt() > WaypointAlt(WP_p_high)" wp="P1"/>
+      <stay alt="WaypointAlt(WP_p_lowest) + WaypointAlt(WP_p_high) + GetAltRef()" until="stage_time > 30" wp="P1"/>
+      <for from="0" to="(WaypointAlt(WP_p_high) / 5)" var="i">
+        <stay alt="WaypointAlt(WP_p_lowest) + (WaypointAlt(WP_p_high) - (5 * $i)) + GetAltRef()" until="stage_time > 30" wp="P1"/>
+      </for>
+      <stay alt="WaypointAlt(WP_p_lowest) + GetAltRef()" wp="P1"/>
+    </block>
+    <block name="prof_down" strip_button="prof_down">
+      <stay climb="-1" until="0.5 > GetPosAlt() - (WaypointAlt(WP_p_low) + GetAltRef())" vmode="climb" wp="P1"/>
+      <stay climb="-0.5" until="0.5 > GetPosAlt() - (WaypointAlt(WP_p_lowest) + GetAltRef())" vmode="climb" wp="P1"/>
+      <stay alt="WaypointAlt(WP_p_lowest)" until="stage_time > 60" wp="P1"/>
+      <!--deroute block="prof_up"/-->
+    </block>
+    <block name="prof_up" strip_button="prof_up">
+      <stay climb="0.5" until="0.5 > (WaypointAlt(WP_p_low) + GetAltRef()) - GetPosAlt()" vmode="climb" wp="P1"/>
+      <stay climb="1" until="0.5 > (WaypointAlt(WP_p_high) + GetAltRef()) - GetPosAlt()" vmode="climb" wp="P1"/>
+      <stay alt="WaypointAlt(WP_p_high)" until="stage_time > 30" wp="P1"/>
+      <deroute block="prof_down"/>
+    </block>
+    <block name="land here" strip_button="Land Here" strip_icon="land-right.png">
+      <call_once fun="NavSetWaypointHere(WP_TD)"/>
+      <deroute block="land"/>
+    </block>
+    <block name="land">
+      <go wp="TD"/>
+      <deroute block="flare"/>
+    </block>
+    <block name="flare">
+      <exception cond="NavDetectGround()" deroute="Holding point"/>
+      <exception cond="!nav_is_in_flight()" deroute="landed"/>
+      <call_once fun="NavStartDetectGround()"/>
+      <stay climb="-5.0" until="10 > GetPosAlt()-GetAltRef()" vmode="climb" wp="TD"/>
+      <stay climb="nav_descend_vspeed" vmode="climb" wp="TD"/>
+    </block>
+    <block name="landed">
+      <attitude pitch="0" roll="0" throttle="0" until="FALSE" vmode="throttle"/>
+    </block>
+  </blocks>
+</flight_plan>

@@ -1,0 +1,29 @@
+<!DOCTYPE flight_plan SYSTEM "../flight_plan.dtd">
+
+<flight_plan alt="30" ground_alt="0" lat0="65.0386606" lon0="24.5549156" max_dist_from_home="1000000" name="Hailuoto S1 Rotor" qfu="0" security_height="2">
+  <header>
+   #include "autopilot.h"
+   #include "subsystems/datalink/datalink.h"
+   #include "modules/nav/nav_line.h"
+   #include "subsystems/electrical.h"
+</header>
+  <waypoints>
+    <waypoint name="MiBoP" x="10" y="0"/>
+    <waypoint alt="10" lat="65.0384495" lon="24.5549361" name="AWS"/>
+    <waypoint alt="10" lat="65.0392" lon="24.5543" name="Lidar"/>
+    <waypoint alt="10" lat="65.0387" lon="24.5522" name="Sodar"/>
+    <waypoint lat="65.0384" lon="24.5574" name="SUMO"/>
+    <waypoint lat="65.0398629" lon=" 24.5592383" name="FMI-St."/>
+  </waypoints>
+  <exceptions>
+    <exception cond="GetPosAlt()-GetAltRef() > WaypointAlt(WP_max_alt)" deroute="Standby"/>
+    <exception cond="datalink_time > 10" deroute="land here"/>
+    <exception cond="electrical.bat_low" deroute="land here"/>
+  </exceptions>
+  <blocks>
+    <block name="Wait GPS">
+      <call_once fun="NavKillThrottle()"/>
+      <while cond="!GpsFixValid()"/>
+    </block>
+  </blocks>
+</flight_plan>
