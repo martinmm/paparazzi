@@ -1,0 +1,109 @@
+<!DOCTYPE flight_plan SYSTEM "flight_plan.dtd">
+
+<flight_plan alt="10" ground_alt="3" lat0="65.0398" lon0="24.5644" max_dist_from_home="150" name="Rotorcraft Basic (Enac)" security_height="2">
+  <header>
+#include "autopilot.h"
+</header>
+  <waypoints>
+    <waypoint name="HOME" x="-2.7" y="4.2"/>
+    <waypoint name="CLIMB" x="0.0" y="5.0"/>
+    <waypoint name="STDBY" x="-5.9" y="9.0"/>
+    <waypoint name="p1" x="-7.0" y="5.6"/>
+    <waypoint name="p2" x="-10.4" y="7.2"/>
+    <waypoint name="p3" x="-11.3" y="11.1"/>
+    <waypoint name="p4" x="-1.7" y="-0.1"/>
+    <waypoint name="CAM" x="-3.9" y="6.4"/>
+    <waypoint name="TD" x="-0.7" y="-2.0"/>
+  </waypoints>
+  <blocks>
+    <block name="Wait GPS">
+      <call_once fun="NavKillThrottle()"/>
+      <while cond="!GpsFixValid()"/>
+    </block>
+    <block name="Geo init">
+      <while cond="LessThan(NavBlockTime(), 10)"/>
+      <call_once fun="NavSetGroundReferenceHere()"/>
+      <call_once fun="NavSetAltitudeReferenceHere()"/>
+    </block>
+    <block name="Geo init2">
+      <while cond="LessThan(NavBlockTime(), 2)"/>
+      <call_once fun="NavSetGroundReferenceHere()"/>
+      <call_once fun="NavSetAltitudeReferenceHere()"/>
+    </block>
+    <block name="Holding point">
+      <call_once fun="NavKillThrottle()"/>
+      <attitude pitch="0" roll="0" throttle="0" until="FALSE" vmode="throttle"/>
+    </block>
+    <block name="Start Engine">
+      <call_once fun="NavResurrect()"/>
+      <attitude pitch="0" roll="0" throttle="0" until="FALSE" vmode="throttle"/>
+    </block>
+    <block name="Takeoff" strip_button="Takeoff" strip_icon="takeoff.png">
+      <exception cond="stateGetPositionEnu_f()->z > 2.0" deroute="Standby"/>
+      <call_once fun="NavSetWaypointHere(WP_CLIMB)"/>
+      <stay climb="nav_climb_vspeed" vmode="climb" wp="CLIMB"/>
+    </block>
+    <block name="Standby" strip_button="Standby" strip_icon="home.png">
+      <stay wp="STDBY"/>
+    </block>
+    <block name="stay_p1" strip_button="P1">
+      <set value="MODULES_STOP" var="wind_align_wind_align_periodic_status"/>
+      <stay wp="p1"/>
+    </block>
+    <block name="stay_p1_wind" strip_button="P1 wind">
+      <call_once fun="wind_align_init()"/>
+      <set value="MODULES_START" var="wind_align_wind_align_periodic_status"/>
+      <stay wp="p1"/>
+    </block>
+    <block name="go_p2">
+      <call_once fun="nav_set_heading_deg(90)"/>
+      <go wp="p2"/>
+      <deroute block="stay_p1"/>
+    </block>
+    <block name="line_p1_p2">
+      <go from="p1" hmode="route" wp="p2"/>
+      <stay until="stage_time>10" wp="p2"/>
+      <go from="p2" hmode="route" wp="p1"/>
+      <deroute block="stay_p1"/>
+    </block>
+    <block name="route">
+      <go from="p1" hmode="route" wp="p3"/>
+      <go from="p3" hmode="route" wp="p4"/>
+      <go from="p4" hmode="route" wp="p1"/>
+      <deroute block="stay_p1"/>
+    </block>
+    <block name="Oval">
+      <oval p1="p1" p2="p2" radius="-1"/>
+    </block>
+    <block name="test yaw">
+      <go wp="p1"/>
+      <for from="1" to="16" var="i">
+        <heading alt="WaypointAlt(WP_p1)" course="90 * $i" until="stage_time > 3"/>
+      </for>
+      <deroute block="Standby"/>
+    </block>
+    <block name="circle CAM" pre_call="nav_set_heading_towards_waypoint(WP_CAM)">
+      <circle radius="nav_radius" wp="CAM"/>
+    </block>
+    <block name="land here" strip_button="Land Here" strip_icon="land-right.png">
+      <set value="MODULES_STOP" var="wind_align_wind_align_periodic_status"/>
+      <call_once fun="NavSetWaypointHere(WP_TD)"/>
+    </block>
+    <block name="land">
+      <go wp="TD"/>
+    </block>
+    <block name="landdown">
+      <exception cond="(GROUND_ALT+10> GetPosAlt())" deroute="flare"/>
+      <stay wp="TD"/>
+    </block>
+    <block name="flare">
+      <exception cond="NavDetectGround()" deroute="Holding point"/>
+      <exception cond="!nav_is_in_flight()" deroute="landed"/>
+      <call_once fun="NavStartDetectGround()"/>
+      <stay climb="nav_descend_vspeed" vmode="climb" wp="TD"/>
+    </block>
+    <block name="landed">
+      <attitude pitch="0" roll="0" throttle="0" until="FALSE" vmode="throttle"/>
+    </block>
+  </blocks>
+</flight_plan>
