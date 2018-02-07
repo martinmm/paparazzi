@@ -1,0 +1,35 @@
+<conf>
+  <aircraft
+   name="bebop2_gfi1"
+   ac_id="101"
+   airframe="airframes/gfi/bebop2_gfi1_wifi.xml"
+   radio="radios/dummy.xml"
+   telemetry="telemetry/default_rotorcraft_withRC.xml"
+   flight_plan="flight_plans/Hailuoto/Hailuoto2018_F2_rotorcraft.xml"
+   settings="settings/rotorcraft_basic.xml settings/control/rotorcraft_guidance.xml settings/nps.xml [settings/control/stabilization_indi.xml] settings/control/rotorcraft_speed.xml"
+   settings_modules="modules/gps_ubx_ucenter.xml modules/air_data.xml modules/geo_mag.xml modules/ins_extended.xml modules/ahrs_int_cmpl_quat.xml modules/stabilization_indi_simple.xml modules/nav_basic_rotorcraft.xml modules/guidance_rotorcraft.xml modules/gps.xml modules/imu_common.xml"
+   gui_color="red"
+  />
+  <aircraft
+   name="bebop2_gfi2"
+   ac_id="102"
+   airframe="airframes/gfi/bebop2_gfi2_wifi.xml"
+   radio="radios/dummy.xml"
+   telemetry="telemetry/default_rotorcraft_withRC.xml"
+   flight_plan="flight_plans/Hailuoto/Hailuoto2018_F2_rotorcraft.xml"
+   settings="settings/rotorcraft_basic.xml settings/control/rotorcraft_guidance.xml settings/nps.xml [settings/control/stabilization_indi.xml] settings/control/rotorcraft_speed.xml"
+   settings_modules="modules/gps_ubx_ucenter.xml modules/air_data.xml modules/geo_mag.xml modules/ins_extended.xml modules/ahrs_int_cmpl_quat.xml modules/stabilization_indi_simple.xml modules/nav_basic_rotorcraft.xml modules/guidance_rotorcraft.xml modules/gps.xml modules/imu_common.xml"
+   gui_color="red"
+  />
+  <aircraft
+   name="bebop2_sim"
+   ac_id="100"
+   airframe="airframes/examples/bebop2_indi.xml"
+   radio="radios/dummy.xml"
+   telemetry="telemetry/default_rotorcraft.xml"
+   flight_plan="flight_plans/Hailuoto/Hailuoto2018_F2_rotorcraft.xml"
+   settings="settings/rotorcraft_basic.xml settings/control/rotorcraft_guidance.xml settings/control/stabilization_indi.xml settings/control/rotorcraft_speed.xml"
+   settings_modules="modules/gps_ubx_ucenter.xml modules/air_data.xml [modules/geo_mag.xml] modules/ins_extended.xml modules/ahrs_int_cmpl_quat.xml modules/stabilization_indi_simple.xml modules/nav_basic_rotorcraft.xml modules/guidance_rotorcraft.xml modules/gps.xml modules/imu_common.xml"
+   gui_color="red"
+  />
+</conf>
