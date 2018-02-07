@@ -55,7 +55,7 @@
       <call_once fun="NavSetWaypointHere(WP_CLIMB)"/>
       <stay climb="nav_climb_vspeed" vmode="climb" wp="CLIMB"/>
     </block>
-    <block name="Standby" strip_button="Standby" strip_icon="home.png">
+    <block name="Standby" strip_button="Standby" strip_icon="home.png" group="base_pattern">
       <set value="MODULES_STOP" var="wind_align_wind_align_periodic_status"/>
       <stay wp="STDBY"/>
     </block>
@@ -64,7 +64,7 @@
       <stay alt="WaypointAlt(WP_p_lowest) + GetAltRef()" until="stage_time > 30" wp="P1"/>
       <deroute block="prof_p1"/>
     </block>
-    <block name="prof_p1">
+    <block name="prof_p1" strip_button="step up" strip_icon="upup.png">
       <set value="MODULES_START" var="wind_align_wind_align_periodic_status"/>
       <stay alt="WaypointAlt(WP_p_lowest) + WaypointAlt(WP_p_high) + GetAltRef() + 5" until="GetPosAlt() > WaypointAlt(WP_p_high)" wp="P1"/>
       <stay alt="WaypointAlt(WP_p_lowest) + WaypointAlt(WP_p_high) + GetAltRef()" until="stage_time > 30" wp="P1"/>
@@ -73,18 +73,33 @@
       </for>
       <stay alt="WaypointAlt(WP_p_lowest) + GetAltRef()" wp="P1"/>
     </block>
-    <block name="prof_up" strip_button="prof_up">
+    <block name="prof_up" strip_button="profile up" strip_icon="up_profile.png">
       <set value="MODULES_START" var="wind_align_wind_align_periodic_status"/>
       <stay climb="0.5" until="0.5 > (WaypointAlt(WP_p_low) + GetAltRef()) - GetPosAlt()" vmode="climb" wp="P1"/>
       <stay climb="1" until="0.5 > (WaypointAlt(WP_p_high) + GetAltRef()) - GetPosAlt()" vmode="climb" wp="P1"/>
       <stay alt="WaypointAlt(WP_p_high)" until="stage_time > 30" wp="P1"/>
       <deroute block="prof_down"/>
     </block>
-    <block name="prof_down" strip_button="prof_down">
+    <block name="prof_down" strip_button="profile down" strip_icon="down_profile.png">
       <set value="MODULES_START" var="wind_align_wind_align_periodic_status"/>
       <stay climb="-1" until="0.5 > GetPosAlt() - (WaypointAlt(WP_p_low) + GetAltRef())" vmode="climb" wp="P1"/>
       <stay climb="-0.5" until="0.5 > GetPosAlt() - (WaypointAlt(WP_p_lowest) + GetAltRef())" vmode="climb" wp="P1"/>
       <stay alt="WaypointAlt(WP_p_lowest)" until="stage_time > 60" wp="P1"/>
+    </block>
+    <block name="land normal" strip_button="Land Normal" strip_icon="land-right.png">
+      <set value="MODULES_STOP" var="wind_align_wind_align_periodic_status"/>
+      <deroute block="land_at_start"/>
+    </block>
+    <block name="land_at_start">
+      <set value="MODULES_STOP" var="wind_align_wind_align_periodic_status"/>
+      <go wp="CLIMB"/>
+      <deroute block="flare_normal"/>
+    </block>
+    <block name="flare_normal">
+      <set value="MODULES_STOP" var="wind_align_wind_align_periodic_status"/>
+      <stay climb="-5.0" until="15 > GetPosAlt()-GetAltRef()" vmode="climb" wp="CLIMB"/>
+      <call_once fun="waypoint_set_alt(WP_CLIMB,5)"/>
+      <stay wp="CLIMB"/>	
     </block>
     <block name="land here" strip_button="Land Here" strip_icon="parachute.png">
       <set value="MODULES_STOP" var="wind_align_wind_align_periodic_status"/>
@@ -104,21 +119,6 @@
       <stay climb="-5.0" until="15 > GetPosAlt()-GetAltRef()" vmode="climb" wp="TD"/>
       <stay climb="nav_descend_vspeed" vmode="climb" wp="TD"/>
       <deroute block="landed"/>	
-    </block>
-    <block name="land normal" strip_button="Land Normal" strip_icon="land-right.png">
-      <set value="MODULES_STOP" var="wind_align_wind_align_periodic_status"/>
-      <deroute block="land_at_start"/>
-    </block>
-    <block name="land_at_start">
-      <set value="MODULES_STOP" var="wind_align_wind_align_periodic_status"/>
-      <go wp="CLIMB"/>
-      <deroute block="flare_normal"/>
-    </block>
-    <block name="flare_normal">
-      <set value="MODULES_STOP" var="wind_align_wind_align_periodic_status"/>
-      <stay climb="-5.0" until="15 > GetPosAlt()-GetAltRef()" vmode="climb" wp="CLIMB"/>
-      <call_once fun="waypoint_set_alt(WP_CLIMB,5)"/>
-      <stay wp="CLIMB"/>	
     </block>
     <block name="landed">
       <set value="MODULES_STOP" var="wind_align_wind_align_periodic_status"/>
