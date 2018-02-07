@@ -4,7 +4,6 @@
   <header>
    #include "autopilot.h"
    #include "subsystems/datalink/datalink.h"
-   #include "modules/nav/nav_line.h"
    #include "subsystems/electrical.h"
 </header>
   <waypoints>
@@ -15,12 +14,14 @@
     <waypoint alt="5.0" name="p_grid" x="50" y="15"/>
     <waypoint name="HOME" x="0" y="0"/>
     <waypoint alt="10" name="CLIMB" x="18.0" y="-0.2"/>
-    <waypoint alt="2.0" name="STDBY" x="19.0" y="6.8"/>
+    <waypoint alt="7.0" name="STDBY" x="19.0" y="6.8"/>
     <waypoint name="P1" x="18.8" y="-6.1"/>
     <waypoint alt="4.0" name="Hover" x="18.4" y="-6.0"/>
     <waypoint name="TD" x="14.6" y="-0.3"/>
-    <waypoint alt="15" lat="65.0359710" lon="24.5556280" name="Flux2"/>
     <waypoint alt="10" lat="65.036463" lon="24.55480" name="Flux1"/>
+    <waypoint alt="15" lat="65.0359710" lon="24.5556280" name="Flux2"/>
+    <waypoint alt="15" lat="65.037893" lon="24.558011" name="FMI_SODAR"/>
+    <waypoint alt="15" lat="65.0396530" lon="24.5552350" name="GFI_SODAR"/>
   </waypoints>
   <exceptions>
     <exception cond="GetPosAlt()-GetAltRef() > WaypointAlt(WP_max_alt)" deroute="Standby"/>
@@ -33,31 +34,38 @@
       <while cond="!GpsFixValid()"/>
     </block>
     <block name="Geo init">
+      <set value="MODULES_STOP" var="wind_align_wind_align_periodic_status"/>
       <while cond="LessThan(NavBlockTime(), 10)"/>
       <call_once fun="NavSetAltitudeReferenceHere()"/>
       <call_once fun="NavSetWaypointHere(WP_CLIMB)"/>
     </block>
     <block name="Holding point">
+      <set value="MODULES_STOP" var="wind_align_wind_align_periodic_status"/>
       <call_once fun="NavKillThrottle()"/>
       <attitude pitch="0" roll="0" throttle="0" until="FALSE" vmode="throttle"/>
     </block>
-    <block name="Start Engine">
+    <block name="Start Engine" strip_button="Start Engine" strip_icon="propeller.png">
+      <set value="MODULES_STOP" var="wind_align_wind_align_periodic_status"/>
       <call_once fun="NavResurrect()"/>
       <attitude pitch="0" roll="0" throttle="0" until="FALSE" vmode="throttle"/>
     </block>
     <block name="Takeoff" strip_button="Takeoff" strip_icon="takeoff.png">
+      <set value="MODULES_STOP" var="wind_align_wind_align_periodic_status"/>
       <exception cond="stateGetPositionEnu_f()->z > 2.0" deroute="Standby"/>
       <call_once fun="NavSetWaypointHere(WP_CLIMB)"/>
       <stay climb="nav_climb_vspeed" vmode="climb" wp="CLIMB"/>
     </block>
     <block name="Standby" strip_button="Standby" strip_icon="home.png">
+      <set value="MODULES_STOP" var="wind_align_wind_align_periodic_status"/>
       <stay wp="STDBY"/>
     </block>
-    <block name="stay_p1">
+    <block name="stay_p1" strip_button="P1">
+      <set value="MODULES_START" var="wind_align_wind_align_periodic_status"/>
       <stay alt="WaypointAlt(WP_p_lowest) + GetAltRef()" until="stage_time > 30" wp="P1"/>
       <deroute block="prof_p1"/>
     </block>
     <block name="prof_p1">
+      <set value="MODULES_START" var="wind_align_wind_align_periodic_status"/>
       <stay alt="WaypointAlt(WP_p_lowest) + WaypointAlt(WP_p_high) + GetAltRef() + 5" until="GetPosAlt() > WaypointAlt(WP_p_high)" wp="P1"/>
       <stay alt="WaypointAlt(WP_p_lowest) + WaypointAlt(WP_p_high) + GetAltRef()" until="stage_time > 30" wp="P1"/>
       <for from="0" to="(WaypointAlt(WP_p_high) / 5)" var="i">
@@ -65,26 +73,31 @@
       </for>
       <stay alt="WaypointAlt(WP_p_lowest) + GetAltRef()" wp="P1"/>
     </block>
-    <block name="prof_down" strip_button="prof_down">
-      <stay climb="-1" until="0.5 > GetPosAlt() - (WaypointAlt(WP_p_low) + GetAltRef())" vmode="climb" wp="P1"/>
-      <stay climb="-0.5" until="0.5 > GetPosAlt() - (WaypointAlt(WP_p_lowest) + GetAltRef())" vmode="climb" wp="P1"/>
-      <stay alt="WaypointAlt(WP_p_lowest)" until="stage_time > 60" wp="P1"/>
-    </block>
     <block name="prof_up" strip_button="prof_up">
+      <set value="MODULES_START" var="wind_align_wind_align_periodic_status"/>
       <stay climb="0.5" until="0.5 > (WaypointAlt(WP_p_low) + GetAltRef()) - GetPosAlt()" vmode="climb" wp="P1"/>
       <stay climb="1" until="0.5 > (WaypointAlt(WP_p_high) + GetAltRef()) - GetPosAlt()" vmode="climb" wp="P1"/>
       <stay alt="WaypointAlt(WP_p_high)" until="stage_time > 30" wp="P1"/>
       <deroute block="prof_down"/>
     </block>
-    <block name="land here" strip_button="Land Here" strip_icon="land-right.png">
+    <block name="prof_down" strip_button="prof_down">
+      <set value="MODULES_START" var="wind_align_wind_align_periodic_status"/>
+      <stay climb="-1" until="0.5 > GetPosAlt() - (WaypointAlt(WP_p_low) + GetAltRef())" vmode="climb" wp="P1"/>
+      <stay climb="-0.5" until="0.5 > GetPosAlt() - (WaypointAlt(WP_p_lowest) + GetAltRef())" vmode="climb" wp="P1"/>
+      <stay alt="WaypointAlt(WP_p_lowest)" until="stage_time > 60" wp="P1"/>
+    </block>
+    <block name="land here" strip_button="Land Here" strip_icon="parachute.png">
+      <set value="MODULES_STOP" var="wind_align_wind_align_periodic_status"/>
       <call_once fun="NavSetWaypointHere(WP_TD)"/>
       <deroute block="land"/>
     </block>
     <block name="land">
+      <set value="MODULES_STOP" var="wind_align_wind_align_periodic_status"/>
       <go wp="TD"/>
       <deroute block="flare"/>
     </block>
     <block name="flare">
+      <set value="MODULES_STOP" var="wind_align_wind_align_periodic_status"/>
       <exception cond="NavDetectGround()" deroute="Holding point"/>
       <exception cond="!nav_is_in_flight()" deroute="landed"/>
       <call_once fun="NavStartDetectGround()"/>
@@ -93,18 +106,22 @@
       <deroute block="landed"/>	
     </block>
     <block name="land normal" strip_button="Land Normal" strip_icon="land-right.png">
+      <set value="MODULES_STOP" var="wind_align_wind_align_periodic_status"/>
       <deroute block="land_at_start"/>
     </block>
     <block name="land_at_start">
+      <set value="MODULES_STOP" var="wind_align_wind_align_periodic_status"/>
       <go wp="CLIMB"/>
-      <deroute block="flare normal"/>
+      <deroute block="flare_normal"/>
     </block>
     <block name="flare_normal">
+      <set value="MODULES_STOP" var="wind_align_wind_align_periodic_status"/>
       <stay climb="-5.0" until="15 > GetPosAlt()-GetAltRef()" vmode="climb" wp="CLIMB"/>
-      <callonce fun="set_waypoint_alt(WP_CLIMB,5)"/>
+      <call_once fun="waypoint_set_alt(WP_CLIMB,5)"/>
       <stay wp="CLIMB"/>	
     </block>
     <block name="landed">
+      <set value="MODULES_STOP" var="wind_align_wind_align_periodic_status"/>
       <attitude pitch="0" roll="0" throttle="0" until="FALSE" vmode="throttle"/>
     </block>
   </blocks>
