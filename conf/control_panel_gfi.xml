@@ -63,7 +63,8 @@
     </program>
   </section>
   <section name="sessions">
-    <session name="Flight bebop2_gfi1_wifi">
+
+    <session name="Flight GFI Wifi">
       <program name="Server"/>
       <program name="GCS">
         <arg flag="-layout" constant="horizontal_data.xml"/>
@@ -72,93 +73,12 @@
         <arg flag="-udp"/>
       </program>
       <program name="Joystick">
-        <arg flag="-ac" constant="bebop2_gfi1"/>
+        <arg flag="-ac" constant="@AIRCRAFT"/>
         <arg flag="logitech_f310_mode2.xml"/>
       </program>
       <program name="Messages"/>
     </session>
-    <session name="Flight bebop2_gfi2_wifi">
-      <program name="Server"/>
-      <program name="GCS">
-        <arg flag="-layout" constant="horizontal_data.xml"/>
-      </program>
-      <program name="Data Link">
-        <arg flag="-udp"/>
-      </program>
-      <program name="Joystick">
-        <arg flag="-ac" constant="bebop2_gfi2"/>
-        <arg flag="logitech_f310_mode2.xml"/>
-      </program>
-      <program name="Messages"/>
-    </session>
-    <session name="Flight bebop2_gfi3_wifi">
-      <program name="Server"/>
-      <program name="GCS">
-        <arg flag="-layout" constant="horizontal_data.xml"/>
-      </program>
-      <program name="Data Link">
-        <arg flag="-udp"/>
-      </program>
-      <program name="Joystick">
-        <arg flag="-ac" constant="bebop2_gfi3"/>
-        <arg flag="logitech_f310_mode2.xml"/>
-      </program>
-      <program name="Messages"/>
-    </session>
-    <session name="Flight bebop2_gfi4_wifi">
-      <program name="Server"/>
-      <program name="GCS">
-        <arg flag="-layout" constant="horizontal_data.xml"/>
-      </program>
-      <program name="Data Link">
-        <arg flag="-udp"/>
-      </program>
-      <program name="Joystick">
-        <arg flag="-ac" constant="bebop2_gfi4"/>
-        <arg flag="logitech_f310_mode2.xml"/>
-      </program>
-      <program name="Messages"/>
-    </session>
-    <session name="Flight bebop2_gfi5_wifi">
-      <program name="Server"/>
-      <program name="GCS">
-        <arg flag="-layout" constant="horizontal_data.xml"/>
-      </program>
-      <program name="Data Link">
-        <arg flag="-udp"/>
-      </program>
-      <program name="Joystick">
-        <arg flag="-ac" constant="bebop2_gfi5"/>
-        <arg flag="logitech_f310_mode2.xml"/>
-      </program>
-      <program name="Messages"/>
-    </session>
-    <session name="Flight USB-serial@57600">
-      <program name="Data Link">
-        <arg flag="-d" constant="/dev/ttyUSB0"/>
-        <arg flag="-s" constant="57600"/>
-      </program>
-      <program name="Server"/>
-      <program name="GCS"/>
-    </session>
-    <session name="SupperBitRF cable telemetry">
-      <program name="Data Link">
-        <arg flag="-d" constant="/dev/ttyACM1"/>
-        <arg flag="-s" constant="57600"/>
-      </program>
-      <program name="Server"/>
-      <program name="GCS"/>
-      <program name="Messages"/>
-      <program name="Messages"/>
-    </session>
-    <session name="SupperBitRF">
-      <program name="Data Link">
-        <arg flag="-d" constant="/dev/ttyACM0"/>
-      </program>
-      <program name="Server"/>
-      <program name="GCS"/>
-      <program name="Messages"/>
-    </session>
+
     <session name="Flight USB-XBee-API@57600">
       <program name="Data Link">
         <arg flag="-d" constant="/dev/paparazzi/xbee"/>
@@ -168,46 +88,6 @@
       <program name="Server"/>
       <program name="GCS"/>
     </session>
-    <session name="HITL">
-      <program name="Hardware in the Loop">
-        <arg flag="-a" constant="HITL"/>
-        <arg flag="-noground"/>
-        <arg flag="-boot"/>
-      </program>
-      <program name="GCS"/>
-      <program name="Data Link">
-        <arg flag="-s" constant="57600"/>
-      </program>
-      <program name="Server"/>
-    </session>
-    <session name="Flight USB-serial Redundant">
-      <program name="Server"/>
-      <program name="GCS"/>
-      <program name="Data Link">
-        <arg flag="-d" constant="/dev/ttyUSB0"/>
-        <arg flag="-id" constant="1"/>
-        <arg flag="-redlink"/>
-      </program>
-      <program name="Data Link">
-        <arg flag="-d" constant="/dev/ttyUSB1"/>
-        <arg flag="-id" constant="2"/>
-        <arg flag="-redlink"/>
-      </program>
-      <program name="Link Combiner"/>
-    </session>
-    <session name="Flight UDP/Wifi">
-      <program name="Server"/>
-      <program name="GCS"/>
-      <program name="Data Link">
-        <arg flag="-udp"/>
-      </program>
-    </session>
-    <session name="Flight USB-serial@9600">
-      <program name="Data Link">
-        <arg flag="-d" constant="/dev/ttyUSB0"/>
-      </program>
-      <program name="Server"/>
-      <program name="GCS"/>
-    </session>
+
   </section>
 </control_panel>
