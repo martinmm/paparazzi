@@ -1,6 +1,6 @@
 <!DOCTYPE airframe SYSTEM "../airframe.dtd">
 
-<airframe name="bebop2_gfi1">
+<airframe name="bebop2_lum1">
 
   <firmware name="rotorcraft">
     <target name="ap" board="bebop2"/>
@@ -14,20 +14,15 @@
     <define name="UART5_DEV" value="/dev/ttyACM1"/>
 
     <define name="SENSOR_SYNC_SEND"/>
-
-    <!--module name="telemetry" type="xbee_api">
-      <configure name="MODEM_PORT" value="UART4"/>
-      <configure name="MODEM_BAUD" value="B57600"/>
-    </module-->
+    
     <module name="telemetry" type="transparent_udp"/>
-    
-    
     <module name="radio_control" type="datalink"/>
     <module name="motor_mixing"/>
     <module name="actuators" type="bebop"/>
     <module name="imu" type="bebop"/>
     <module name="gps" type="ublox"/>
     <module name="stabilization" type="indi_simple"/>
+    <!-- 180113 module name="stabilization" type="indi"/ -->
     <module name="ahrs" type="int_cmpl_quat">
       <configure name="USE_MAGNETOMETER" value="TRUE"/>
       <define name="AHRS_USE_GPS_HEADING" value="FALSE"/>
@@ -89,19 +84,16 @@
   </section>
 
   <section name="IMU" prefix="IMU_">
-    <!-- Magnetometer still needs to be calibrated -->
-    <define name="MAG_X_CURRENT_COEF" value="0.00349278666278"/>
-    <define name="MAG_Y_CURRENT_COEF" value="-0.00294581023579"/>
-    <define name="MAG_Z_CURRENT_COEF" value="0.00744261463196"/>
+  <!-- Magnetometer still needs to be calibrated -->
 
-<!-- gfi1 -->
-<!-- calibration 2018-02-08 20:00 -->
-<define name="MAG_X_NEUTRAL" value="-153"/>
-<define name="MAG_Y_NEUTRAL" value="92"/>
-<define name="MAG_Z_NEUTRAL" value="-155"/>
-<define name="MAG_X_SENS" value="6.70925333694" integer="16"/>
-<define name="MAG_Y_SENS" value="6.7946208246" integer="16"/>
-<define name="MAG_Z_SENS" value="7.03594192695" integer="16"/>
+<!--white GFI -->
+<!--calibration 2018-02-08  19:39-->
+<define name="MAG_X_NEUTRAL" value="-237"/>
+<define name="MAG_Y_NEUTRAL" value="-104"/>
+<define name="MAG_Z_NEUTRAL" value="460"/>
+<define name="MAG_X_SENS" value="5.58583026876" integer="16"/>
+<define name="MAG_Y_SENS" value="6.73979334752" integer="16"/>
+<define name="MAG_Z_SENS" value="7.06907906662" integer="16"/>
 
 <define name= "MAG_X_CURRENT_COEF" value="0.00349278666278"/>
 <define name= "MAG_Y_CURRENT_COEF" value="-0.00294581023579"/>
@@ -176,32 +168,10 @@
 
   <section name="STABILIZATION_ATTITUDE_INDI" prefix="STABILIZATION_INDI_">
     <!-- control effectiveness -->
-    <!--values from 2017-02-25/-->
-    <define name="G1_P" value="0.039417"/>
-    <define name="G1_Q" value="0.028263"/>
-    <define name="G1_R" value="0.001562"/>
-    <define name="G2_R" value="0.291099"/>
-
-
-    <!--values from 2017-02-22/>
-    <define name="G1_P" value="0.035041"/>
-    <define name="G1_Q" value="0.032567"/>
-    <define name="G1_R" value="0.003482"/>
-    <define name="G2_R" value="0.253018"/-->
-
-
-    <!--values from 2017-02-21/-->
-    <!--define name="G1_P" value="0.049396"/>
-    <define name="G1_Q" value="0.035965"/>
-    <define name="G1_R" value="0.001762"/>
-    <define name="G2_R" value="0.291593"/-->
-
-
-    <!--values before 2017-02-21/-->
-    <!--define name="G1_P" value="0.062"/>
-    <define name="G1_Q" value="0.0427"/>
-    <define name="G1_R" value="0.0029"/>
-    <define name="G2_R" value="0.30"/-->
+    <define name="G1_P" value="0.041"/>
+    <define name="G1_Q" value="0.028"/>
+    <define name="G1_R" value="0.0016"/>
+    <define name="G2_R" value="0.26"/>
 
     <!-- Here it is assumed that your removed the damping from your bebop2!
          The dampers do not really damp, but cause oscillation. By removing/
@@ -272,8 +242,8 @@
   <section name="BAT">
     <define name="MILLIAMP_AT_FULL_THROTTLE" value="8700"/>
     <define name="CATASTROPHIC_BAT_LEVEL" value="9.9" unit="V"/>
-    <define name="CRITIC_BAT_LEVEL" value="10.4" unit="V"/>
-    <define name="LOW_BAT_LEVEL" value="10.6" unit="V"/>
+    <define name="CRITIC_BAT_LEVEL" value="11.0" unit="V"/>
+    <define name="LOW_BAT_LEVEL" value="11.1" unit="V"/>
     <define name="MAX_BAT_LEVEL" value="12.4" unit="V"/>
   </section>
 

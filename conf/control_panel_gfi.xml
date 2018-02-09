@@ -45,6 +45,10 @@
       <arg flag="-fbw" variable="fbw_serial_port"/>
       <arg flag="-ap" variable="ap_serial_port"/>
     </program>
+    <program name="Joystick Futaba" command="sw/ground_segment/joystick/input2ivy">
+      <arg flag="-ac" constant="@AIRCRAFT"/>
+      <arg flag="ppm2usb.xml"/>
+    </program>
     <program name="Environment Simulator" command="sw/simulator/gaia">
       <arg flag="-b" variable="ivy_bus"/>
     </program>
