@@ -168,10 +168,10 @@
 
   <section name="STABILIZATION_ATTITUDE_INDI" prefix="STABILIZATION_INDI_">
     <!-- control effectiveness -->
-    <define name="G1_P" value="0.041"/>
-    <define name="G1_Q" value="0.028"/>
-    <define name="G1_R" value="0.0016"/>
-    <define name="G2_R" value="0.26"/>
+    <define name="G1_P" value="0.049333"/>
+    <define name="G1_Q" value="0.033657"/>
+    <define name="G1_R" value="0.003534"/>
+    <define name="G2_R" value="0.327476"/>
 
     <!-- Here it is assumed that your removed the damping from your bebop2!
          The dampers do not really damp, but cause oscillation. By removing/

@@ -194,3 +194,4 @@ tests/results/*
 
 # K-develop
 *.kate-swp
+conf/conf.xml.bak

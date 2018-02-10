@@ -96,12 +96,36 @@
 
 <!-- gfi1 -->
 <!-- calibration 2018-02-08 20:00 -->
-<define name="MAG_X_NEUTRAL" value="-153"/>
+<!--define name="MAG_X_NEUTRAL" value="-153"/>
 <define name="MAG_Y_NEUTRAL" value="92"/>
 <define name="MAG_Z_NEUTRAL" value="-155"/>
 <define name="MAG_X_SENS" value="6.70925333694" integer="16"/>
 <define name="MAG_Y_SENS" value="6.7946208246" integer="16"/>
-<define name="MAG_Z_SENS" value="7.03594192695" integer="16"/>
+<define name="MAG_Z_SENS" value="7.03594192695" integer="16"/-->
+
+<!-- calibration 2018-02-09 19:01 close to shit-->
+<!--define name="MAG_X_NEUTRAL" value="-157"/>
+<define name="MAG_Y_NEUTRAL" value="83"/>
+<define name="MAG_Z_NEUTRAL" value="-153"/>
+<define name="MAG_X_SENS" value="6.69424272494" integer="16"/>
+<define name="MAG_Y_SENS" value="6.80388761665" integer="16"/>
+<define name="MAG_Z_SENS" value="7.07091858247" integer="16"/-->
+
+<!-- calibration 2018-02-09 19:36 shit!!!-->
+<!--define name="MAG_X_NEUTRAL" value="-154"/>
+<define name="MAG_Y_NEUTRAL" value="85"/>
+<define name="MAG_Z_NEUTRAL" value="-153"/>
+<define name="MAG_X_SENS" value="6.72010096978" integer="16"/>
+<define name="MAG_Y_SENS" value="6.79078931643" integer="16"/>
+<define name="MAG_Z_SENS" value="7.04102150909" integer="16"/-->
+
+<!-- calibration 2018-02-09 20:25 new sensor-->
+<define name="MAG_X_NEUTRAL" value="14"/>
+<define name="MAG_Y_NEUTRAL" value="-57"/>
+<define name="MAG_Z_NEUTRAL" value="133"/>
+<define name="MAG_X_SENS" value="6.49175094962" integer="16"/>
+<define name="MAG_Y_SENS" value="6.61688219789" integer="16"/>
+<define name="MAG_Z_SENS" value="6.83809662915" integer="16"/>
 
 <define name= "MAG_X_CURRENT_COEF" value="0.00349278666278"/>
 <define name= "MAG_Y_CURRENT_COEF" value="-0.00294581023579"/>
