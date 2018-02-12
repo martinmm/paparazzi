@@ -54,4 +54,5 @@
    settings_modules="modules/ahrs_int_cmpl_quat.xml modules/stabilization_int_euler.xml modules/nav_basic_rotorcraft.xml modules/guidance_rotorcraft.xml modules/gps.xml modules/imu_common.xml modules/nav_survey_rectangle_rotorcraft.xml modules/digital_cam.xml modules/rotorcraft_cam.xml modules/switch_servo.xml"
    gui_color="white"
   />
+
 </conf>
