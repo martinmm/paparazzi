@@ -88,12 +88,21 @@
 
 <!--white GFI -->
 <!--calibration 2018-02-08  19:39-->
-<define name="MAG_X_NEUTRAL" value="-237"/>
+<!--define name="MAG_X_NEUTRAL" value="-237"/>
 <define name="MAG_Y_NEUTRAL" value="-104"/>
 <define name="MAG_Z_NEUTRAL" value="460"/>
 <define name="MAG_X_SENS" value="5.58583026876" integer="16"/>
 <define name="MAG_Y_SENS" value="6.73979334752" integer="16"/>
-<define name="MAG_Z_SENS" value="7.06907906662" integer="16"/>
+<define name="MAG_Z_SENS" value="7.06907906662" integer="16"/-->
+
+<!--calibration 2018-02-11 01:12-->
+<define name="MAG_X_NEUTRAL" value="-229"/>
+<define name="MAG_Y_NEUTRAL" value="-96"/>
+<define name="MAG_Z_NEUTRAL" value="447"/>
+<define name="MAG_X_SENS" value="5.59915006151" integer="16"/>
+<define name="MAG_Y_SENS" value="6.89886239028" integer="16"/>
+<define name="MAG_Z_SENS" value="7.07256898358" integer="16"/>
+
 
 <define name= "MAG_X_CURRENT_COEF" value="0.00349278666278"/>
 <define name= "MAG_Y_CURRENT_COEF" value="-0.00294581023579"/>
@@ -168,10 +177,10 @@
 
   <section name="STABILIZATION_ATTITUDE_INDI" prefix="STABILIZATION_INDI_">
     <!-- control effectiveness -->
-    <define name="G1_P" value="0.049333"/>
-    <define name="G1_Q" value="0.033657"/>
-    <define name="G1_R" value="0.003534"/>
-    <define name="G2_R" value="0.327476"/>
+    <define name="G1_P" value="0.061709"/>
+    <define name="G1_Q" value="0.037333"/>
+    <define name="G1_R" value="0.004133"/>
+    <define name="G2_R" value="0.324613"/>
 
     <!-- Here it is assumed that your removed the damping from your bebop2!
          The dampers do not really damp, but cause oscillation. By removing/
