@@ -90,21 +90,18 @@
 
   <section name="IMU" prefix="IMU_">
     <!-- Magnetometer still needs to be calibrated -->
-    <define name= "MAG_X_CURRENT_COEF" value="0.00349278666278"/>
-    <define name= "MAG_Y_CURRENT_COEF" value="-0.00294581023579"/>
-    <define name= "MAG_Z_CURRENT_COEF" value="0.00744261463196"/>
 
-<!-- gfi2 -->
-<define name="MAG_X_NEUTRAL" value="30"/>
-<define name="MAG_Y_NEUTRAL" value="-63"/>
-<define name="MAG_Z_NEUTRAL" value="119"/>
-<define name="MAG_X_SENS" value="6.49696641647" integer="16"/>
-<define name="MAG_Y_SENS" value="6.67618074537" integer="16"/>
-<define name="MAG_Z_SENS" value="6.82524476463" integer="16"/>
+	<!-- gfi2 -->
+	<define name="MAG_X_NEUTRAL" value="30"/>
+	<define name="MAG_Y_NEUTRAL" value="-63"/>
+	<define name="MAG_Z_NEUTRAL" value="119"/>
+	<define name="MAG_X_SENS" value="6.49696641647" integer="16"/>
+	<define name="MAG_Y_SENS" value="6.67618074537" integer="16"/>
+	<define name="MAG_Z_SENS" value="6.82524476463" integer="16"/>
 
-<define name= "MAG_X_CURRENT_COEF" value="0.00349278666278"/>
-<define name= "MAG_Y_CURRENT_COEF" value="-0.00294581023579"/>
-<define name= "MAG_Z_CURRENT_COEF" value="0.00744261463196"/>
+	<define name= "MAG_X_CURRENT_COEF" value="0.00349278666278"/>
+	<define name= "MAG_Y_CURRENT_COEF" value="-0.00294581023579"/>
+	<define name= "MAG_Z_CURRENT_COEF" value="0.00744261463196"/>
 
   </section>
 

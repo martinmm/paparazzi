@@ -89,13 +89,36 @@
 <!--white GFI -->
 
 <!--calibration 2018-02-09 13:57-->
-<define name="MAG_X_NEUTRAL" value="-256"/>
+<!--define name="MAG_X_NEUTRAL" value="-256"/>
 <define name="MAG_Y_NEUTRAL" value="70"/>
 <define name="MAG_Z_NEUTRAL" value="392"/>
 <define name="MAG_X_SENS" value="5.6303808765" integer="16"/>
 <define name="MAG_Y_SENS" value="6.82854492184" integer="16"/>
-<define name="MAG_Z_SENS" value="7.01297326967" integer="16"/>
-<!--calibration 2018-02-09 -->
+<define name="MAG_Z_SENS" value="7.01297326967" integer="16"/-->
+
+<!--calibration 2018-02-11 02:10-->
+<!--define name="MAG_X_NEUTRAL" value="-256"/>
+<define name="MAG_Y_NEUTRAL" value="84"/>
+<define name="MAG_Z_NEUTRAL" value="386"/>
+<define name="MAG_X_SENS" value="5.67323811277" integer="16"/>
+<define name="MAG_Y_SENS" value="6.54968214814" integer="16"/>
+<define name="MAG_Z_SENS" value="7.01736044471" integer="16"/-->
+
+<!--calibration 2018-02-12 14:23 Stephans pc-->
+<define name="MAG_X_NEUTRAL" value="-237"/>
+<define name="MAG_Y_NEUTRAL" value="78"/>
+<define name="MAG_Z_NEUTRAL" value="386"/>
+<define name="MAG_X_SENS" value="5.75812148582" integer="16"/>
+<define name="MAG_Y_SENS" value="6.72365996726" integer="16"/>
+<define name="MAG_Z_SENS" value="6.98445202095" integer="16"/>
+
+<!--calibration 2018-02-09 18:07-->
+<!--define name="MAG_X_NEUTRAL" value="-245"/>
+<define name="MAG_Y_NEUTRAL" value="91"/>
+<define name="MAG_Z_NEUTRAL" value="388"/>
+<define name="MAG_X_SENS" value="5.64269637896" integer="16"/>
+<define name="MAG_Y_SENS" value="6.76649048964" integer="16"/>
+<define name="MAG_Z_SENS" value="7.07175176044" integer="16"/-->
 
 <!--calibration 2018-02-09 14:04-->
 <define name= "MAG_X_CURRENT_COEF" value="-0.00297057624543"/>
@@ -103,14 +126,7 @@
 <define name= "MAG_Z_CURRENT_COEF" value="0.00647406209333"/>
 <!--calibration 2018-02-09 -->
 
-<!--calibration 2018-02-08  19:39
-<define name="MAG_X_NEUTRAL" value="-263"/>
-<define name="MAG_Y_NEUTRAL" value="73"/>
-<define name="MAG_Z_NEUTRAL" value="396"/>
-<define name="MAG_X_SENS" value="5.74359883154" integer="16"/>
-<define name="MAG_Y_SENS" value="6.84667659414" integer="16"/>
-<define name="MAG_Z_SENS" value="7.04175215922" integer="16"/>
-calibration 2018-02-08  -->
+
 
   </section>
 
@@ -180,11 +196,11 @@ calibration 2018-02-08  -->
   </section>
 
   <section name="STABILIZATION_ATTITUDE_INDI" prefix="STABILIZATION_INDI_">
-    <!-- control effectiveness -->
-    <define name="G1_P" value="0.0423"/>
-    <define name="G1_Q" value="0.0318"/>
-    <define name="G1_R" value="0.0028"/>
-    <define name="G2_R" value="0.3117"/>
+    <!--values from 2018-02-12/-->
+    <define name="G1_P" value="0.030109"/>
+    <define name="G1_Q" value="0.02327"/>
+    <define name="G1_R" value="0.001251"/>
+    <define name="G2_R" value="0.236279"/>
 
     <!-- Here it is assumed that your removed the damping from your bebop2!
          The dampers do not really damp, but cause oscillation. By removing/

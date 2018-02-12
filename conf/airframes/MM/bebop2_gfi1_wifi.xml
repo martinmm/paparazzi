@@ -90,22 +90,52 @@
 
   <section name="IMU" prefix="IMU_">
     <!-- Magnetometer still needs to be calibrated -->
-    <define name="MAG_X_CURRENT_COEF" value="0.00349278666278"/>
-    <define name="MAG_Y_CURRENT_COEF" value="-0.00294581023579"/>
-    <define name="MAG_Z_CURRENT_COEF" value="0.00744261463196"/>
 
-<!-- gfi1 -->
-<!-- calibration 2018-02-08 20:00 -->
-<define name="MAG_X_NEUTRAL" value="-153"/>
-<define name="MAG_Y_NEUTRAL" value="92"/>
-<define name="MAG_Z_NEUTRAL" value="-155"/>
-<define name="MAG_X_SENS" value="6.70925333694" integer="16"/>
-<define name="MAG_Y_SENS" value="6.7946208246" integer="16"/>
-<define name="MAG_Z_SENS" value="7.03594192695" integer="16"/>
+	<!-- gfi1 -->
+	<!-- calibration 2018-02-08 20:00 -->
+	<!--define name="MAG_X_NEUTRAL" value="-153"/>
+	<define name="MAG_Y_NEUTRAL" value="92"/>
+	<define name="MAG_Z_NEUTRAL" value="-155"/>
+	<define name="MAG_X_SENS" value="6.70925333694" integer="16"/>
+	<define name="MAG_Y_SENS" value="6.7946208246" integer="16"/>
+	<define name="MAG_Z_SENS" value="7.03594192695" integer="16"/-->
 
-<define name= "MAG_X_CURRENT_COEF" value="0.00349278666278"/>
-<define name= "MAG_Y_CURRENT_COEF" value="-0.00294581023579"/>
-<define name= "MAG_Z_CURRENT_COEF" value="0.00744261463196"/>
+	<!-- calibration 2018-02-09 19:01 close to shit-->
+	<!--define name="MAG_X_NEUTRAL" value="-157"/>
+	<define name="MAG_Y_NEUTRAL" value="83"/>
+	<define name="MAG_Z_NEUTRAL" value="-153"/>
+	<define name="MAG_X_SENS" value="6.69424272494" integer="16"/>
+	<define name="MAG_Y_SENS" value="6.80388761665" integer="16"/>
+	<define name="MAG_Z_SENS" value="7.07091858247" integer="16"/-->
+
+	<!-- calibration 2018-02-09 19:36 shit!!!-->
+	<!--define name="MAG_X_NEUTRAL" value="-154"/>
+	<define name="MAG_Y_NEUTRAL" value="85"/>
+	<define name="MAG_Z_NEUTRAL" value="-153"/>
+	<define name="MAG_X_SENS" value="6.72010096978" integer="16"/>
+	<define name="MAG_Y_SENS" value="6.79078931643" integer="16"/>
+	<define name="MAG_Z_SENS" value="7.04102150909" integer="16"/-->
+
+	<!-- calibration 2018-02-09 20:25 new sensor-->
+	<!--define name="MAG_X_NEUTRAL" value="14"/>
+	<define name="MAG_Y_NEUTRAL" value="-57"/>
+	<define name="MAG_Z_NEUTRAL" value="133"/>
+	<define name="MAG_X_SENS" value="6.49175094962" integer="16"/>
+	<define name="MAG_Y_SENS" value="6.61688219789" integer="16"/>
+	<define name="MAG_Z_SENS" value="6.83809662915" integer="16"/-->
+
+	<!-- calibration 2018-02-12 15:09 Stephans pc -->
+	<define name="MAG_X_NEUTRAL" value="14"/>
+	<define name="MAG_Y_NEUTRAL" value="-68"/>
+	<define name="MAG_Z_NEUTRAL" value="138"/>
+	<define name="MAG_X_SENS" value="6.50098375709" integer="16"/>
+	<define name="MAG_Y_SENS" value="6.69077264882" integer="16"/>
+	<define name="MAG_Z_SENS" value="6.84290060304" integer="16"/>
+
+
+	<define name= "MAG_X_CURRENT_COEF" value="0.00349278666278"/>
+	<define name= "MAG_Y_CURRENT_COEF" value="-0.00294581023579"/>
+	<define name= "MAG_Z_CURRENT_COEF" value="0.00744261463196"/>
 
   </section>
 
@@ -176,11 +206,11 @@
 
   <section name="STABILIZATION_ATTITUDE_INDI" prefix="STABILIZATION_INDI_">
     <!-- control effectiveness -->
-    <!--values from 2017-02-25/-->
-    <define name="G1_P" value="0.039417"/>
-    <define name="G1_Q" value="0.028263"/>
-    <define name="G1_R" value="0.001562"/>
-    <define name="G2_R" value="0.291099"/>
+    <!--values from 2018-02-12/-->
+    <define name="G1_P" value="0.041877"/>
+    <define name="G1_Q" value="0.030614"/>
+    <define name="G1_R" value="0.002276"/>
+    <define name="G2_R" value="0.242892"/>
 
 
     <!--values from 2017-02-22/>
