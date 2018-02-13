@@ -7,16 +7,16 @@
    #include "subsystems/electrical.h"
 </header>
   <waypoints>
-    <waypoint alt="420.0" name="max_alt" x="50" y="35"/>
+    <waypoint alt="420.0" name="max_alt" x="50.0" y="35.0"/>
     <waypoint alt="7.0" name="p_lowest" x="50" y="30"/>
     <waypoint alt="25.0" name="p_low" x="50" y="25"/>
     <waypoint alt="200.0" name="p_high" x="50" y="20"/>
     <waypoint alt="5.0" name="p_grid" x="50" y="15"/>
     <waypoint name="HOME" x="0" y="0"/>
-    <waypoint name="CLIMB" alt="10" x="18.0" y="-0.2"/>
-    <waypoint name="STDBY" alt="8.0" x="5.6" y="25.3"/>
-    <waypoint name="P1" alt="9.0" x="2.2" y="21.0"/>
-    <waypoint name="Hover" alt="11.0" x="16.5" y="20.9"/>
+    <waypoint alt="10" name="CLIMB" x="18.0" y="-0.2"/>
+    <waypoint alt="8.0" name="STDBY" x="8.2" y="22.5"/>
+    <waypoint alt="9.0" name="P1" x="-6.9" y="-11.5"/>
+    <waypoint alt="11.0" name="Hover" x="-8.0" y="-6.7"/>
     <waypoint name="TD" x="14.6" y="-0.3"/>
     <waypoint alt="10" lat="65.036463" lon="24.55480" name="Flux1"/>
     <waypoint alt="15" lat="65.0359843" lon="24.5555335" name="Flux2"/>
@@ -100,8 +100,6 @@
     </block>
     <block name="flare_normal">
       <set value="MODULES_STOP" var="wind_align_wind_align_periodic_status"/>
-      <!--stay climb="-5.0" until="20 > GetPosAlt()-GetAltRef()" vmode="climb" wp="CLIMB"/-->
-      <!--call_once fun="waypoint_set_alt(WP_CLIMB,8)"/-->
       <stay wp="CLIMB"/>
     </block>
     <block name="land here" strip_button="Land Here" strip_icon="parachute.png">
