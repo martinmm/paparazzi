@@ -194,7 +194,7 @@
 
     <define name="POWER_CTL_BAT_NOMINAL" value="14.8" unit="volt"/>
     <!-- outer loop proportional gain -->
-    <define name="ALTITUDE_PGAIN" value="0.2"/> <!-- -0.024 -->
+    <define name="ALTITUDE_PGAIN" value="0.15"/> <!-- -0.024 -->
     <!-- outer loop saturation -->
     <define name="ALTITUDE_MAX_CLIMB" value="2."/>
 
@@ -211,8 +211,8 @@
     <define name="AUTO_THROTTLE_PITCH_OF_VZ_PGAIN" value="0.2"/>
 
     <!-- auto pitch inner loop -->
-    <define name="AUTO_PITCH_PGAIN" value="0.03"/> <!-- -0.03 -->
-    <define name="AUTO_PITCH_IGAIN" value="0.13"/>
+    <define name="AUTO_PITCH_PGAIN" value="0.05"/> <!-- -0.03 -->
+    <define name="AUTO_PITCH_IGAIN" value="0.03"/> <!-- 0.13 -->
     <define name="AUTO_PITCH_MAX_PITCH" value="0.35"/>
     <define name="AUTO_PITCH_MIN_PITCH" value="-0.35"/>
 
