@@ -84,6 +84,13 @@
   </section>
 
   <section name="IMU" prefix="IMU_">
+     <!--define name="ACCEL_X_NEUTRAL" value="61"/>
+     <define name="ACCEL_Y_NEUTRAL" value="-27"/>
+     <define name="ACCEL_Z_NEUTRAL" value="12"/>
+     <define name="ACCEL_X_SENS" value="2.45488883548" integer="16"/>
+     <define name="ACCEL_Y_SENS" value="2.42743878659" integer="16"/>
+     <define name="ACCEL_Z_SENS" value="2.44898011719" integer="16"/-->
+
   <!-- Magnetometer still needs to be calibrated -->
 
 <!--white GFI -->
@@ -105,12 +112,21 @@
 <define name="MAG_Z_SENS" value="7.05908788116" integer="16"/-->
 
 <!--calibration 2018-02-12 13:10 -->
-<define name="MAG_X_NEUTRAL" value="82"/>
+<!--define name="MAG_X_NEUTRAL" value="82"/>
 <define name="MAG_Y_NEUTRAL" value="69"/>
 <define name="MAG_Z_NEUTRAL" value="403"/>
 <define name="MAG_X_SENS" value="5.50874271777" integer="16"/>
 <define name="MAG_Y_SENS" value="6.89722092985" integer="16"/>
-<define name="MAG_Z_SENS" value="6.99752007695" integer="16"/>
+<define name="MAG_Z_SENS" value="6.99752007695" integer="16"/-->
+
+<!--calibration 2018-02-18 12:28 -->
+<define name="MAG_X_NEUTRAL" value="73"/>
+<define name="MAG_Y_NEUTRAL" value="58"/>
+<define name="MAG_Z_NEUTRAL" value="410"/>
+<define name="MAG_X_SENS" value="5.69856045749" integer="16"/>
+<define name="MAG_Y_SENS" value="6.82929734406" integer="16"/>
+<define name="MAG_Z_SENS" value="7.00263974721" integer="16"/>
+
 
 <define name= "MAG_X_CURRENT_COEF" value="0.00349278666278"/>
 <define name= "MAG_Y_CURRENT_COEF" value="-0.00294581023579"/>
@@ -185,10 +201,17 @@
 
   <section name="STABILIZATION_ATTITUDE_INDI" prefix="STABILIZATION_INDI_">
     <!-- control effectiveness -->
-    <define name="G1_P" value="0.0552"/>
+    <!--define name="G1_P" value="0.0552"/>
     <define name="G1_Q" value="0.0273"/>
     <define name="G1_R" value="0.0037"/>
-    <define name="G2_R" value="0.2017"/>
+    <define name="G2_R" value="0.2017"/-->
+
+    <!-- control effectiveness -->
+    <!--values from GFI4, 2018-02-12 flying much nicer without altitude oszillation/-->
+    <define name="G1_P" value="0.045485"/>
+    <define name="G1_Q" value="0.040126"/>
+    <define name="G1_R" value="0.002623"/>
+    <define name="G2_R" value="0.239326"/>
 
     <!-- Here it is assumed that your removed the damping from your bebop2!
          The dampers do not really damp, but cause oscillation. By removing/

@@ -6,9 +6,16 @@
       <papget type="message_field" display="text" x="800" y="20">
         <property name="scale" value="1."/>
         <property name="field" value="AIR_DATA:amsl_baro"/>
-        <property name="format" value="z = %.1f m"/>
+        <property name="format" value="z = %.1f                m"/>
         <property name="size" value="15."/>
         <property name="color" value="yellow"/>
+      </papget>
+      <papget type="message_field" display="text" x="885" y="20">
+        <property name="scale" value="0.0039063"/>
+        <property name="field" value="ROTORCRAFT_FP:up"/>
+        <property name="format" value="(%.1f)"/>
+        <property name="size" value="15."/>
+        <property name="color" value="white"/>
       </papget>
       <papget type="message_field" display="text" x="10" y="175">
         <property name="scale" value="1."/>
@@ -30,6 +37,34 @@
         <property name="format" value="T  = %.1f degC"/>
         <property name="size" value="15."/>
         <property name="color" value="blue"/>
+      </papget>
+      <papget type="message_field" display="text" x="800" y="80">
+        <property name="scale" value="0.0139882"/>
+        <property name="field" value="ROTORCRAFT_FP:theta"/>
+        <property name="format" value="Attack  = %.1f"/>
+        <property name="size" value="15."/>
+        <property name="color" value="white"/>
+      </papget>
+      <papget type="message_field" display="text" x="800" y="100">
+        <property name="scale" value="0.0139882"/>
+        <property name="field" value="ROTORCRAFT_FP:psi"/>
+        <property name="format" value="Dir  = %.1f"/>
+        <property name="size" value="15."/>
+        <property name="color" value="white"/>
+      </papget>
+      <papget type="message_field" display="text" x="800" y="120">
+        <property name="scale" value="0.0139882"/>
+        <property name="field" value="ROTORCRAFT_FP:phi"/>
+        <property name="format" value="level  = %.1f"/>
+        <property name="size" value="15."/>
+        <property name="color" value="white"/>
+      </papget>
+      <papget type="message_field" display="text" x="800" y="140">
+        <property name="scale" value="0.0139882"/>
+        <property name="field" value="AIR_DATA:temp"/>
+        <property name="format" value="T(int)  = %.1f degC"/>
+        <property name="size" value="15."/>
+        <property name="color" value="white"/>
       </papget>
       <papget type="message_field" display="text" x="8" y="149">
         <property name="scale" value="1."/>

@@ -14,9 +14,9 @@
     <waypoint alt="5.0" name="p_grid" x="50" y="15"/>
     <waypoint name="HOME" x="0" y="0"/>
     <waypoint alt="10" name="CLIMB" x="18.0" y="-0.2"/>
-    <waypoint alt="8.0" name="STDBY" x="8.2" y="22.5"/>
-    <waypoint alt="9.0" name="P1" x="-6.9" y="-11.5"/>
-    <waypoint alt="11.0" name="Hover" x="-8.0" y="-6.7"/>
+    <waypoint alt="8.0" name="STDBY" x="-13.7" y="-0.0"/>
+    <waypoint alt="9.0" name="P1" x="-15.0" y="-3.9"/>
+    <waypoint alt="11.0" name="Hover" x="-23.2" y="-5.5"/>
     <waypoint name="TD" x="14.6" y="-0.3"/>
     <waypoint alt="10" lat="65.036463" lon="24.55480" name="Flux1"/>
     <waypoint alt="15" lat="65.0359843" lon="24.5555335" name="Flux2"/>
@@ -87,7 +87,8 @@
       <set value="MODULES_START" var="wind_align_wind_align_periodic_status"/>
       <stay climb="-1" until="0.5 > GetPosAlt() - (WaypointAlt(WP_p_low) + GetAltRef())" vmode="climb" wp="P1"/>
       <stay climb="-0.5" until="0.5 > GetPosAlt() - (WaypointAlt(WP_p_lowest) + GetAltRef())" vmode="climb" wp="P1"/>
-      <stay alt="WaypointAlt(WP_p_lowest)" until="stage_time > 60" wp="P1"/>
+      <stay alt="WaypointAlt(WP_p_lowest)" until="stage_time > 30" wp="P1"/>
+      <deroute block="prof_up"/>
     </block>
     <block name="land normal" strip_button="Land Normal" strip_icon="land-right.png">
       <set value="MODULES_STOP" var="wind_align_wind_align_periodic_status"/>
