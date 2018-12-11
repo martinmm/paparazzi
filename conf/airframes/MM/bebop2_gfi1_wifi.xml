@@ -125,13 +125,20 @@
 	<define name="MAG_Z_SENS" value="6.83809662915" integer="16"/-->
 
 	<!-- calibration 2018-02-12 15:09 Stephans pc -->
-	<define name="MAG_X_NEUTRAL" value="14"/>
+	<!--define name="MAG_X_NEUTRAL" value="14"/>
 	<define name="MAG_Y_NEUTRAL" value="-68"/>
 	<define name="MAG_Z_NEUTRAL" value="138"/>
 	<define name="MAG_X_SENS" value="6.50098375709" integer="16"/>
 	<define name="MAG_Y_SENS" value="6.69077264882" integer="16"/>
-	<define name="MAG_Z_SENS" value="6.84290060304" integer="16"/>
+	<define name="MAG_Z_SENS" value="6.84290060304" integer="16"/-->
 
+<!-- calibration 2018-02-22 09:46 Stephans pc -->
+<define name="MAG_X_NEUTRAL" value="11"/>
+<define name="MAG_Y_NEUTRAL" value="-61"/>
+<define name="MAG_Z_NEUTRAL" value="140"/>
+<define name="MAG_X_SENS" value="6.47944473922" integer="16"/>
+<define name="MAG_Y_SENS" value="6.70842077335" integer="16"/>
+<define name="MAG_Z_SENS" value="6.91638673695" integer="16"/>
 
 	<define name= "MAG_X_CURRENT_COEF" value="0.00349278666278"/>
 	<define name= "MAG_Y_CURRENT_COEF" value="-0.00294581023579"/>
@@ -212,27 +219,6 @@
     <define name="G1_R" value="0.002276"/>
     <define name="G2_R" value="0.242892"/>
 
-
-    <!--values from 2017-02-22/>
-    <define name="G1_P" value="0.035041"/>
-    <define name="G1_Q" value="0.032567"/>
-    <define name="G1_R" value="0.003482"/>
-    <define name="G2_R" value="0.253018"/-->
-
-
-    <!--values from 2017-02-21/-->
-    <!--define name="G1_P" value="0.049396"/>
-    <define name="G1_Q" value="0.035965"/>
-    <define name="G1_R" value="0.001762"/>
-    <define name="G2_R" value="0.291593"/-->
-
-
-    <!--values before 2017-02-21/-->
-    <!--define name="G1_P" value="0.062"/>
-    <define name="G1_Q" value="0.0427"/>
-    <define name="G1_R" value="0.0029"/>
-    <define name="G2_R" value="0.30"/-->
-
     <!-- Here it is assumed that your removed the damping from your bebop2!
          The dampers do not really damp, but cause oscillation. By removing/
          fixing them, the bebop2 will fly much better-->
@@ -267,6 +253,7 @@
     <define name="HOVER_KD" value="85"/>
     <define name="HOVER_KI" value="20"/>
     <define name="NOMINAL_HOVER_THROTTLE" value="0.655"/>
+    <!--define name="ADAPT_THROTTLE_ENABLED" value="FALSE"/-->
     <define name="ADAPT_THROTTLE_ENABLED" value="TRUE"/>
   </section>
 
@@ -302,8 +289,8 @@
   <section name="BAT">
     <define name="MILLIAMP_AT_FULL_THROTTLE" value="8700"/>
     <define name="CATASTROPHIC_BAT_LEVEL" value="9.9" unit="V"/>
-    <define name="CRITIC_BAT_LEVEL" value="10.4" unit="V"/>
-    <define name="LOW_BAT_LEVEL" value="10.6" unit="V"/>
+    <define name="CRITIC_BAT_LEVEL" value="11.0" unit="V"/>
+    <define name="LOW_BAT_LEVEL" value="11.1" unit="V"/>
     <define name="MAX_BAT_LEVEL" value="12.4" unit="V"/>
   </section>
 

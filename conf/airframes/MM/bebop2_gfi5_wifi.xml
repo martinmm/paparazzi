@@ -88,12 +88,21 @@
 
 <!--white GFI -->
 <!--calibration 2018-02-08  19:39-->
-<define name="MAG_X_NEUTRAL" value="-237"/>
+<!--define name="MAG_X_NEUTRAL" value="-237"/>
 <define name="MAG_Y_NEUTRAL" value="-104"/>
 <define name="MAG_Z_NEUTRAL" value="460"/>
 <define name="MAG_X_SENS" value="5.58583026876" integer="16"/>
 <define name="MAG_Y_SENS" value="6.73979334752" integer="16"/>
-<define name="MAG_Z_SENS" value="7.06907906662" integer="16"/>
+<define name="MAG_Z_SENS" value="7.06907906662" integer="16"/-->
+
+<!--calibration 2018-02-18  15:35-->
+<define name="MAG_X_NEUTRAL" value="-203"/>
+<define name="MAG_Y_NEUTRAL" value="-84"/>
+<define name="MAG_Z_NEUTRAL" value="433"/>
+<define name="MAG_X_SENS" value="5.81579168629" integer="16"/>
+<define name="MAG_Y_SENS" value="6.71697575602" integer="16"/>
+<define name="MAG_Z_SENS" value="7.08076665235" integer="16"/>
+
 
 <define name= "MAG_X_CURRENT_COEF" value="0.00349278666278"/>
 <define name= "MAG_Y_CURRENT_COEF" value="-0.00294581023579"/>
