@@ -128,13 +128,21 @@
 <define name="MAG_Y_SENS" value="6.63697718417" integer="16"/>
 <define name="MAG_Z_SENS" value="7.07491551489" integer="16"/-->
 
-	<!-- calibration 2018-02-12 15:09 Stephans pc -->
-	<define name="MAG_X_NEUTRAL" value="14"/>
-	<define name="MAG_Y_NEUTRAL" value="-68"/>
-	<define name="MAG_Z_NEUTRAL" value="138"/>
-	<define name="MAG_X_SENS" value="6.50098375709" integer="16"/>
-	<define name="MAG_Y_SENS" value="6.69077264882" integer="16"/>
-	<define name="MAG_Z_SENS" value="6.84290060304" integer="16"/>
+<!-- calibration 2018-02-12 15:09 Stephans pc -->
+<!--define name="MAG_X_NEUTRAL" value="14"/>
+<define name="MAG_Y_NEUTRAL" value="-68"/>
+<define name="MAG_Z_NEUTRAL" value="138"/>
+<define name="MAG_X_SENS" value="6.50098375709" integer="16"/>
+<define name="MAG_Y_SENS" value="6.69077264882" integer="16"/>
+<define name="MAG_Z_SENS" value="6.84290060304" integer="16"/-->
+
+<!-- calibration 2018-02-22 09:46 Stephans pc -->
+<define name="MAG_X_NEUTRAL" value="11"/>
+<define name="MAG_Y_NEUTRAL" value="-61"/>
+<define name="MAG_Z_NEUTRAL" value="140"/>
+<define name="MAG_X_SENS" value="6.47944473922" integer="16"/>
+<define name="MAG_Y_SENS" value="6.70842077335" integer="16"/>
+<define name="MAG_Z_SENS" value="6.91638673695" integer="16"/>
 
 <!--calibration 2018-02-09 14:04-->
 <define name= "MAG_X_CURRENT_COEF" value="-0.00297057624543"/>
