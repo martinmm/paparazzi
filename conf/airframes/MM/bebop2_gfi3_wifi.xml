@@ -120,12 +120,20 @@
 <define name="MAG_Z_SENS" value="6.99752007695" integer="16"/-->
 
 <!--calibration 2018-02-18 12:28 -->
-<define name="MAG_X_NEUTRAL" value="73"/>
+<!--define name="MAG_X_NEUTRAL" value="73"/>
 <define name="MAG_Y_NEUTRAL" value="58"/>
 <define name="MAG_Z_NEUTRAL" value="410"/>
 <define name="MAG_X_SENS" value="5.69856045749" integer="16"/>
 <define name="MAG_Y_SENS" value="6.82929734406" integer="16"/>
-<define name="MAG_Z_SENS" value="7.00263974721" integer="16"/>
+<define name="MAG_Z_SENS" value="7.00263974721" integer="16"/-->
+
+<!--calibration 2018-02-18 15:41 after swapping IMU -->
+<define name="MAG_X_NEUTRAL" value="-199"/>
+<define name="MAG_Y_NEUTRAL" value="117"/>
+<define name="MAG_Z_NEUTRAL" value="183"/>
+<define name="MAG_X_SENS" value="6.66262973853" integer="16"/>
+<define name="MAG_Y_SENS" value="6.77929983498" integer="16"/>
+<define name="MAG_Z_SENS" value="7.00663444539" integer="16"/>
 
 
 <define name= "MAG_X_CURRENT_COEF" value="0.00349278666278"/>
